@@ -1,0 +1,40 @@
+conflicting_items:
+- app_path: [CODE, extra_files/__init__.py]
+  item: [extra_files, __init__.py]
+  text_chunks:
+  - alternatives:
+    - {l: 0, n: 7, s: A}
+    - {l: 7, n: 1, s: B}
+    start: 0
+- app_path: [CODE, forms/MainForm]
+  components: []
+  item: [client_code, MainForm]
+  text_chunks:
+  - alternatives:
+    - {l: 5, n: 433, s: A}
+    - {l: 438, n: 355, s: B}
+    start: 5
+- app_path: [CODE, server_modules/ServerModule1]
+  item: [server_code, ServerModule1]
+  text_chunks:
+  - alternatives:
+    - {l: 9, n: 194, s: A}
+    - {l: 203, n: 199, s: B}
+    start: 9
+- app_path: [CODE, server_modules/catalog]
+  item: [server_code, catalog]
+  text_chunks:
+  - alternatives:
+    - {l: 0, n: 116, s: A}
+    - {l: 116, n: 117, s: B}
+    start: 0
+- app_path: [CODE, assets/theme.css]
+  item: [asset, theme.css]
+  text_chunks:
+  - alternatives:
+    - {l: 0, n: 1211, s: A}
+    - {l: 1211, n: 72, s: B}
+    start: 0
+merge:
+  base: c6044bdb1bfea25ce1a1b06999e61ffca3197258
+  parents: [d09649043fabc2c52996bd047bc862bbd730af50, 7654b7bb729ec755cd7de77e12c744f8319c149e]

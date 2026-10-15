@@ -1209,4 +1209,76 @@ Keep the main content flush to the top of its viewport.
   .anvil-role-product-grid > .anvil-flow-panel-gutter {
     grid-template-columns: minmax(0, 1fr);
   }
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+
+html, body { touch-action: pan-x pan-y; -webkit-user-select: none; user-select: none; }
+input, textarea { -webkit-user-select: text; user-select: text; }
+img { -webkit-user-drag: none; user-drag: none; -webkit-touch-callout: none; }
+button { font-family: "DM Sans", "Segoe UI", sans-serif; }
+
+.anvil-role-pos-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 32px;
+  color: #242820;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+}
+.anvil-role-pos-eyebrow { color: #456b50; font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+.anvil-role-pos-title { margin: 5px 0 16px; font-family: "Playfair Display", Georgia, serif; font-size: 38px; }
+.anvil-role-pos-subtitle, .anvil-role-product-description, .anvil-role-history-detail { color: #85877f; font-size: 12px; }
+.anvil-role-pos-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+.anvil-role-pos-brand { flex: 1; font-size: 14px; font-weight: 700; }
+.anvil-role-shop-choices, .anvil-role-product-grid, .anvil-role-register-layout, .anvil-role-analytics-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.anvil-role-shop-card, .anvil-role-product-card, .anvil-role-basket-panel, .anvil-role-metric-card {
+  padding: 18px;
+  border: 1px solid #e9e8e1;
+  border-radius: 8px;
+  background: #fff;
+}
+.anvil-role-shop-card { min-width: 280px; flex: 1; }
+.anvil-role-shop-title, .anvil-role-basket-title { font-family: "Playfair Display", Georgia, serif; font-size: 21px; }
+.anvil-role-register-layout { align-items: flex-start; }
+.anvil-role-menu-panel { min-width: 0; flex: 1 1 650px; }
+.anvil-role-product-card { width: 240px; margin: 6px; }
+.anvil-role-product-card img { width: 100%; border-radius: 5px; object-fit: cover; }
+.anvil-role-product-name { margin-top: 8px; font-size: 14px; font-weight: 700; }
+.anvil-role-product-price, .anvil-role-basket-line-total, .anvil-role-metric-value { color: #31503a; font-weight: 700; }
+.anvil-role-product-description { min-height: 54px; line-height: 1.5; }
+.anvil-role-basket-panel { width: 340px; flex: 0 0 340px; }
+.anvil-role-basket-heading, .anvil-role-basket-row, .anvil-role-history-row { display: flex; align-items: center; gap: 9px; padding: 8px 0; }
+.anvil-role-basket-heading { justify-content: space-between; }
+.anvil-role-basket-item-name, .anvil-role-history-detail { flex: 1; }
+.anvil-role-basket-empty { padding: 18px 0; color: #85877f; font-size: 12px; }
+.anvil-role-basket-total { margin: 12px 0; font-size: 16px; font-weight: 700; }
+.anvil-role-payment-options { gap: 16px; }
+.anvil-role-field-label { margin-top: 10px; color: #63675e; font-size: 11px; font-weight: 700; }
+.anvil-role-cash-input { width: 100%; }
+.anvil-role-change-message { color: #456b50; font-size: 11px; }
+.anvil-role-pos-button { background: #456b50; color: white; font-weight: 700; }
+.anvil-role-pos-quiet-button { color: #456b50; }
+.anvil-role-quantity-button { min-width: 34px; }
+.anvil-role-quantity-label { min-width: 20px; text-align: center; }
+.anvil-role-analytics-summary { margin: 20px 0; }
+.anvil-role-metric-card { min-width: 175px; flex: 1; }
+.anvil-role-receipt { width: 340px; max-width: 100%; padding: 22px; background: #fff; }
+.anvil-role-receipt-title { font-family: "Playfair Display", Georgia, serif; font-size: 22px; text-align: center; }
+.anvil-role-receipt-line { padding: 5px 0; font-size: 12px; }
+.anvil-role-receipt-total { margin-top: 12px; font-size: 16px; font-weight: 700; }
+.anvil-role-receipt-footer { margin-top: 14px; color: #85877f; font-size: 11px; text-align: center; }
+
+@media (max-width: 700px) {
+  .anvil-role-pos-shell { padding: 16px; }
+  .anvil-role-pos-title { font-size: 31px; }
+  .anvil-role-product-card { width: calc(50% - 16px); }
+  .anvil-role-basket-panel { width: 100%; flex-basis: 100%; }
+}
+
+@media print {
+  body * { visibility: hidden !important; }
+  .anvil-role-receipt, .anvil-role-receipt * { visibility: visible !important; }
+  .anvil-role-receipt { position: fixed; top: 0; left: 0; width: 72mm; }
 }

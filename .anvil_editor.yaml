@@ -1,5 +1,7 @@
 unique_ids:
   assets:
+    brands/keeco_logo.png: NNM3NQ4KOAAJHFN5YIVXA4R25FSIK6PB
+    brands/wssc_logo.png: VJMPPG4IQSVQLWLQIOMOJVRUEO5YBBAZ
     keecoo_pos/assets/logo/keeco_logo.png: '1792076019910612992298849.3951'
     keecoo_pos/assets/products/biscof-dream-kleecoo.png: '1792076020007451588662234.5838'
     keecoo_pos/assets/products/classic-keecoo.png: '1792076020080401843132342.656'
@@ -17,6 +19,18 @@ unique_ids:
     keecoo_pos/data/shops.csv: '1792076021076911781649720.7023'
     keecoo_pos/data/transactions.csv: '1792076021119255639561689.73035'
     keecoo_pos/menu.txt: '1792076021182203061928583.58585'
+    products/biscof-dream-kleecoo.webp: KVBEX7U72WOUNI6BLP5WWHDQZQU4BZBZ
+    products/cafe-latte.webp: WMX5VB3NJLU7VU3PZVYFAVBSLVO5P6PJ
+    products/classic-keecoo.webp: LOJ7VHVVRQLJXDSBPDWLJSC4DPEDO4UA
+    products/dark-con-leche.webp: NXU2CJMKN3QKFKHNHQNY5IWRZ7WUR63Y
+    products/dulce-con-leche.webp: M4SOR7RVLPNRVIDRADBXCHXDAG2R5JC2
+    products/happy-camper-keeyco.webp: ZJVJUX664WSBQMAAFBEGQBPVCWZWIEYS
+    products/lavender-matcha.webp: 3COGH2FW2SJGQHSTULJM3L3EDYSOQE2F
+    products/seasalt-matcha.webp: LG6CK4XNIFZTI6DRZJD3DNXHZQ564XKV
+    products/triple-choco-keecoo.webp: 4XVG3U76OVXAKRFFQUSRVCNZGMUMKEHW
+    products/ube-royale-keecoo.webp: 7YBLMGMFW5VWY7SZJY3IYZGFRPIKR7G7
+    products/velvet-cream-keecoo.webp: T6OQEWPD7GCXVDLTILH4Q27LRFMXWV4K
+    products/white-con-leche.webp: 4Y4YQOBN2OSZM475STKI6NTIBDCSXPAM
     static/analytics.js: '179207596470270080333077.47508'
     static/app.css: '1792075964755633705459473.1313'
     static/interaction-lock.js: '1792075964799135814859683.84'
