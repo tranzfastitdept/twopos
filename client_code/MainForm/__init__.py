@@ -67,17 +67,24 @@ class MainForm(MainFormTemplate):
     self.reset_form()
     header = FlowPanel(role="pos-header")
     self.root.add_component(header)
-    if self.default_shop is None:
-      switch_button = Button(text="← Shops", role="pos-quiet-button")
-      switch_button.set_event_handler("click", lambda **event_args: self.show_shop_picker())
-      header.add_component(switch_button)
-    header.add_component(Image(source=self.current_shop["logo"], height=44, display_mode="shrink_to_fit"))
-    header.add_component(Label(text=self.current_shop["name"], role="pos-brand"))
+    switch_button = Button(text="←", role="back-link")
+    switch_button.set_event_handler("click", lambda **event_args: self.show_shop_picker())
+    header.add_component(switch_button)
+    header.add_component(Image(
+      source=self.current_shop["logo"],
+      height=42,
+      display_mode="shrink_to_fit",
+      role="brand-logo",
+    ))
+    brand = FlowPanel(role="brand-copy")
+    brand.add_component(Label(text=self.current_shop["name"], role="brand-name"))
+    brand.add_component(Label(text="POINT OF SALE", role="brand-meta"))
+    header.add_component(brand)
     if self.analytics_visible:
-      history = Button(text="← Register", role="pos-quiet-button")
+      history = Button(text="Back to register  ↗", role="nav-link")
       history.set_event_handler("click", lambda **event_args: self.show_register_view())
     else:
-      history = Button(text="Sales & history", role="pos-quiet-button")
+      history = Button(text="Sales & history  ↗", role="nav-link")
       history.set_event_handler("click", lambda **event_args: self.show_analytics())
     header.add_component(history)
 
@@ -85,22 +92,32 @@ class MainForm(MainFormTemplate):
       self.render_analytics()
       return
 
-    self.root.add_component(Label(text="YOUR MENU", role="pos-eyebrow"))
-    self.root.add_component(Label(text="Good things, made to order.", role="pos-title"))
     layout = FlowPanel(role="register-layout")
     self.root.add_component(layout)
 
     menu = ColumnPanel(role="menu-panel")
     layout.add_component(menu)
+    section_heading = FlowPanel(role="section-heading")
+    heading_copy = FlowPanel(role="section-heading-copy")
+    heading_copy.add_component(Label(text="YOUR MENU", role="pos-eyebrow"))
+    heading_copy.add_component(Label(text="Good things,\nmade to order.", role="section-title"))
+    section_heading.add_component(heading_copy)
+    section_heading.add_component(Label(text="{} ITEMS".format(len(self.products)), role="menu-count"))
+    menu.add_component(section_heading)
     grid = FlowPanel(role="product-grid")
     menu.add_component(grid)
     for product in self.products:
       card = ColumnPanel(role="product-card")
-      card.add_component(Image(source=product["image"], height=190, display_mode="fill_width"))
+      card.add_component(Image(
+        source=product["image"],
+        height=185,
+        display_mode="fill_width",
+        role="product-image",
+      ))
       card.add_component(Label(text=product["name"], role="product-name"))
       card.add_component(Label(text=product["description"], role="product-description"))
       card.add_component(Label(text=self.format_money(product["price"]), role="product-price"))
-      add_button = Button(text="Add to basket  +", role="pos-button")
+      add_button = Button(text="+", role="add-product-button")
       add_button.set_event_handler(
         "click",
         lambda product_id=product["product_id"], **event_args: self.change_quantity(product_id, 1),
@@ -139,17 +156,22 @@ class MainForm(MainFormTemplate):
 
   def render_basket(self):
     self.basket_panel.clear()
-    heading = FlowPanel(role="basket-heading")
-    heading.add_component(Label(text="Your basket", role="basket-title"))
+    heading = FlowPanel(role="checkout-heading")
+    heading_copy = FlowPanel(role="checkout-heading-copy")
+    heading_copy.add_component(Label(text="CURRENT ORDER", role="pos-eyebrow"))
+    heading_copy.add_component(Label(text="Your basket", role="basket-title"))
+    heading.add_component(heading_copy)
     clear_button = Button(text="Clear", role="pos-quiet-button")
     clear_button.set_event_handler("click", lambda **event_args: self.clear_basket())
     heading.add_component(clear_button)
     self.basket_panel.add_component(heading)
 
+    basket_items = ColumnPanel(role="basket-items")
+    self.basket_panel.add_component(basket_items)
     total = self.basket_total()
     if not self.cart:
-      self.basket_panel.add_component(Label(
-        text="Your basket is empty. Tap an item to get started.",
+      basket_items.add_component(Label(
+        text="Your basket is empty.\nTap an item to get started.",
         role="basket-empty",
       ))
     for product in self.products:
@@ -157,44 +179,67 @@ class MainForm(MainFormTemplate):
       if not quantity:
         continue
       row = FlowPanel(role="basket-row")
-      row.add_component(Label(
-        text="{} × {}".format(quantity, product["name"]),
-        role="basket-item-name",
+      row.add_component(Image(
+        source=product["image"],
+        height=58,
+        display_mode="fill_width",
+        role="basket-image",
       ))
-      row.add_component(Label(text=self.format_money(product["price"] * quantity), role="basket-line-total"))
+      details = ColumnPanel(role="basket-line-info")
+      details.add_component(Label(text=product["name"], role="basket-item-name"))
+      details.add_component(Label(text="{} each".format(self.format_money(product["price"])), role="basket-unit-price"))
+      quantity_control = FlowPanel(role="quantity-control")
       decrease = Button(text="−", role="quantity-button")
       decrease.set_event_handler(
         "click",
         lambda product_id=product["product_id"], **event_args: self.change_quantity(product_id, -1),
       )
-      row.add_component(decrease)
-      row.add_component(Label(text=str(quantity), role="quantity-label"))
+      quantity_control.add_component(decrease)
+      quantity_control.add_component(Label(text=str(quantity), role="quantity-label"))
       increase = Button(text="+", role="quantity-button")
       increase.set_event_handler(
         "click",
         lambda product_id=product["product_id"], **event_args: self.change_quantity(product_id, 1),
       )
-      row.add_component(increase)
-      self.basket_panel.add_component(row)
+      quantity_control.add_component(increase)
+      details.add_component(quantity_control)
+      row.add_component(details)
+      row.add_component(Label(text=self.format_money(product["price"] * quantity), role="basket-line-total"))
+      basket_items.add_component(row)
 
-    self.basket_total_label = Label(
-      text="Subtotal   {}".format(self.format_money(total)),
-      role="basket-total",
-    )
-    self.basket_panel.add_component(self.basket_total_label)
+    checkout_bottom = ColumnPanel(role="checkout-bottom")
+    self.basket_panel.add_component(checkout_bottom)
+    subtotal = FlowPanel(role="subtotal")
+    subtotal.add_component(Label(text="Subtotal", role="subtotal-label"))
+    self.basket_total_label = Label(text=self.format_money(total), role="subtotal-value")
+    subtotal.add_component(self.basket_total_label)
+    checkout_bottom.add_component(subtotal)
+
+    checkout_bottom.add_component(Label(text="Payment method", role="field-label"))
     payment_options = FlowPanel(role="payment-options")
-    cash = RadioButton(text="Cash", group_name="payment-method", selected=self.payment_method == "Cash")
+    cash = RadioButton(
+      text="Cash",
+      group_name="payment-method",
+      selected=self.payment_method == "Cash",
+      role="payment-option",
+    )
     cash.set_event_handler("change", lambda **event_args: self.set_payment_method("Cash"))
-    digital = RadioButton(text="Digital", group_name="payment-method", selected=self.payment_method == "Digital")
+    digital = RadioButton(
+      text="Digital",
+      group_name="payment-method",
+      selected=self.payment_method == "Digital",
+      role="payment-option",
+    )
     digital.set_event_handler("change", lambda **event_args: self.set_payment_method("Digital"))
     payment_options.add_component(cash)
     payment_options.add_component(digital)
-    self.basket_panel.add_component(Label(text="Payment method", role="field-label"))
-    self.basket_panel.add_component(payment_options)
+    checkout_bottom.add_component(payment_options)
 
     paid = round(self.parse_cash_amount(self.cash_received), 2)
     if self.payment_method == "Cash":
-      self.basket_panel.add_component(Label(text="Amount received", role="field-label"))
+      checkout_bottom.add_component(Label(text="Amount received", role="field-label"))
+      cash_input = FlowPanel(role="cash-input-wrap")
+      cash_input.add_component(Label(text="₱", role="currency-prefix"))
       self.cash_input = TextBox(
         text=self.cash_received,
         type="number",
@@ -202,23 +247,26 @@ class MainForm(MainFormTemplate):
         role="cash-input",
       )
       self.cash_input.set_event_handler("change", self.cash_input_changed)
-      self.basket_panel.add_component(self.cash_input)
+      cash_input.add_component(self.cash_input)
+      checkout_bottom.add_component(cash_input)
       if paid < total:
         change_text = "Short by {}.".format(self.format_money(total - paid)) if paid else "Enter the amount received."
       else:
         change_text = "Change due: {}".format(self.format_money(paid - total))
       self.change_label = Label(text=change_text, role="change-message")
-      self.basket_panel.add_component(self.change_label)
+      checkout_bottom.add_component(self.change_label)
     else:
       self.change_label = None
 
-    self.checkout_button = Button(
-      text="Charge {}".format(self.format_money(total)),
-      role="pos-button",
-    )
+    checkout_button = FlowPanel(role="checkout-button")
+    self.checkout_button = Button(text="Charge", role="charge-action")
+    self.checkout_total_label = Label(text=self.format_money(total), role="charge-total")
+    checkout_button.add_component(self.checkout_button)
+    checkout_button.add_component(self.checkout_total_label)
     self.checkout_button.enabled = bool(self.cart) and (self.payment_method == "Digital" or paid >= total)
     self.checkout_button.set_event_handler("click", self.checkout)
-    self.basket_panel.add_component(self.checkout_button)
+    checkout_bottom.add_component(checkout_button)
+    checkout_bottom.add_component(Label(text="Order total is verified at checkout", role="secure-note"))
 
   def clear_basket(self):
     self.cart = {}
@@ -235,8 +283,8 @@ class MainForm(MainFormTemplate):
 
   def update_checkout_state(self):
     total = self.basket_total()
-    self.basket_total_label.text = "Subtotal   {}".format(self.format_money(total))
-    self.checkout_button.text = "Charge {}".format(self.format_money(total))
+    self.basket_total_label.text = self.format_money(total)
+    self.checkout_total_label.text = self.format_money(total)
     paid = round(self.parse_cash_amount(self.cash_received), 2)
     if self.change_label is not None:
       if paid <= 0:
