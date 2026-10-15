@@ -192,6 +192,7 @@ class MainForm(MainFormTemplate):
     self.basket_panel.add_component(Label(text="Payment method", role="field-label"))
     self.basket_panel.add_component(payment_options)
 
+    paid = round(self.parse_cash_amount(self.cash_received), 2)
     if self.payment_method == "Cash":
       self.basket_panel.add_component(Label(text="Amount received", role="field-label"))
       self.cash_input = TextBox(
@@ -202,7 +203,6 @@ class MainForm(MainFormTemplate):
       )
       self.cash_input.set_event_handler("change", self.cash_input_changed)
       self.basket_panel.add_component(self.cash_input)
-      paid = round(self.parse_cash_amount(self.cash_received), 2)
       if paid < total:
         change_text = "Short by {}.".format(self.format_money(total - paid)) if paid else "Enter the amount received."
       else:

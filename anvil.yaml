@@ -1,3 +1,87 @@
+db_schema:
+  app_settings:
+    client: none
+    columns:
+    - admin_ui: {}
+      name: key
+      type: string
+    - admin_ui: {}
+      name: value
+      type: string
+    server: full
+    title: App settings
+  products:
+    client: none
+    columns:
+    - admin_ui: {}
+      name: shop
+      target: shops
+      type: link_single
+    - admin_ui: {}
+      name: product_id
+      type: string
+    - admin_ui: {}
+      name: name
+      type: string
+    - admin_ui: {}
+      name: description
+      type: string
+    - admin_ui: {}
+      name: price
+      type: number
+    - admin_ui: {}
+      name: image
+      type: string
+    - admin_ui: {}
+      name: sort_order
+      type: number
+    server: full
+    title: Products
+  shops:
+    client: none
+    columns:
+    - admin_ui: {}
+      name: slug
+      type: string
+    - admin_ui: {}
+      name: name
+      type: string
+    - admin_ui: {}
+      name: logo
+      type: string
+    - admin_ui: {}
+      name: receipt_header
+      type: string
+    server: full
+    title: Shops
+  transactions:
+    client: none
+    columns:
+    - admin_ui: {}
+      name: shop
+      target: shops
+      type: link_single
+    - admin_ui: {}
+      name: timestamp
+      type: datetime
+    - admin_ui: {}
+      name: items_json
+      type: simpleObject
+    - admin_ui: {}
+      name: total_amount
+      type: number
+    - admin_ui: {}
+      name: payment_method
+      type: string
+    - admin_ui: {}
+      name: amount_paid
+      type: number
+    - admin_ui: {}
+      name: change_given
+      type: number
+    server: full
+    title: Transactions
+name: TwoPOS
 native_deps:
   head_html: |2
 
@@ -9,6 +93,8 @@ runtime_options:
   server_spec: {}
   server_version: python3-sandbox
   version: 2
+script_config:
+  Script: {client_callable: true}
 services:
 - client_config: {enable_v2: true}
   server_config: {}

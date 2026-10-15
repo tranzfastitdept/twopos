@@ -2,13 +2,13 @@ SHOPS = [
   {
     "slug": "workstation_specialty_coffee_pos",
     "name": "Workstation Specialty Coffee",
-    "logo": "_/theme/brands/wssc_logo.png",
+    "logo": "_/theme/workstation_specialty_coffee_pos/assets/logo/wssc_logo.png",
     "receipt_header": "Thank you for stopping by!",
   },
   {
     "slug": "keecoo_pos",
     "name": "Keecoo Signature Cookies",
-    "logo": "_/theme/brands/keeco_logo.png",
+    "logo": "_/theme/keecoo_pos/assets/logo/keeco_logo.png",
     "receipt_header": "Thank you! Happiness, baked chunky.",
   },
 ]
@@ -20,7 +20,7 @@ PRODUCTS = {
       "name": "White Con Leche",
       "description": "Espresso and creamy milk, perfectly balanced with a touch of sweetness and cinnamon.",
       "price": 160.00,
-      "image": "_/theme/products/white-con-leche.webp",
+      "image": "_/theme/workstation_specialty_coffee_pos/assets/thumbs/white-con-leche.webp",
       "sort_order": 1,
     },
     {
@@ -28,7 +28,7 @@ PRODUCTS = {
       "name": "Dark Con Leche",
       "description": "Bold espresso blended with creamy milk for a rich, intense, and mocha flavor.",
       "price": 160.00,
-      "image": "_/theme/products/dark-con-leche.webp",
+      "image": "_/theme/workstation_specialty_coffee_pos/assets/thumbs/dark-con-leche.webp",
       "sort_order": 2,
     },
     {
@@ -36,7 +36,7 @@ PRODUCTS = {
       "name": "Seasalt Matcha",
       "description": "Vibrant matcha balanced with a touch of sea salt.",
       "price": 210.00,
-      "image": "_/theme/products/seasalt-matcha.webp",
+      "image": "_/theme/workstation_specialty_coffee_pos/assets/thumbs/seasalt-matcha.webp",
       "sort_order": 3,
     },
     {
@@ -44,7 +44,7 @@ PRODUCTS = {
       "name": "Lavender Matcha",
       "description": "A delicate blend of matcha and floral lavender — smooth, calming, and lightly sweet in every sip.",
       "price": 190.00,
-      "image": "_/theme/products/lavender-matcha.webp",
+      "image": "_/theme/workstation_specialty_coffee_pos/assets/thumbs/lavender-matcha.webp",
       "sort_order": 4,
     },
     {
@@ -52,7 +52,7 @@ PRODUCTS = {
       "name": "Dulce Con Leche",
       "description": "Rich espresso, creamy milk, and buttery toffee sweetness in every sip.",
       "price": 160.00,
-      "image": "_/theme/products/dulce-con-leche.webp",
+      "image": "_/theme/workstation_specialty_coffee_pos/assets/thumbs/dulce-con-leche.webp",
       "sort_order": 5,
     },
     {
@@ -60,7 +60,7 @@ PRODUCTS = {
       "name": "Cafe Latte",
       "description": "Smooth espresso and creamy milk.",
       "price": 160.00,
-      "image": "_/theme/products/cafe-latte.webp",
+      "image": "_/theme/workstation_specialty_coffee_pos/assets/thumbs/cafe-latte.webp",
       "sort_order": 6,
     },
   ],
@@ -70,7 +70,7 @@ PRODUCTS = {
       "name": "Ube Royale Keecoo",
       "description": "A rich, chewy ube cookie bursting with creamy ube halaya filling and decadent white chocolate.",
       "price": 149.00,
-      "image": "_/theme/products/ube-royale-keecoo.webp",
+      "image": "_/theme/keecoo_pos/assets/thumbs/ube-royale-keecoo.webp",
       "sort_order": 1,
     },
     {
@@ -78,7 +78,7 @@ PRODUCTS = {
       "name": "Happy Camper Keecoo",
       "description": "A gooey, chocolatey s'mores cookie packed with chocolate, marshmallow goodness.",
       "price": 149.00,
-      "image": "_/theme/products/happy-camper-keeyco.webp",
+      "image": "_/theme/keecoo_pos/assets/thumbs/happy-camper-keeyco.webp",
       "sort_order": 2,
     },
     {
@@ -86,7 +86,7 @@ PRODUCTS = {
       "name": "Triple Choco Keecoo",
       "description": "A rich, fudgy chocolate cookie loaded with three kinds of chocolate for the ultimate chocolate indulgence.",
       "price": 149.00,
-      "image": "_/theme/products/triple-choco-keecoo.webp",
+      "image": "_/theme/keecoo_pos/assets/thumbs/triple-choco-keecoo.webp",
       "sort_order": 3,
     },
     {
@@ -94,7 +94,7 @@ PRODUCTS = {
       "name": "The Classic Keecoo",
       "description": "Our signature chunky chocolate chip cookie with crisp edges, a soft, chewy center, and generous chocolate chips.",
       "price": 149.00,
-      "image": "_/theme/products/classic-keecoo.webp",
+      "image": "_/theme/keecoo_pos/assets/thumbs/classic-keecoo.webp",
       "sort_order": 4,
     },
     {
@@ -102,7 +102,7 @@ PRODUCTS = {
       "name": "Velvet Cream Keecoo",
       "description": "A rich, soft red velvet cookie paired with a luscious creamy cheese center for the perfect sweet-tangy bite.",
       "price": 149.00,
-      "image": "_/theme/products/velvet-cream-keecoo.webp",
+      "image": "_/theme/keecoo_pos/assets/thumbs/velvet-cream-keecoo.webp",
       "sort_order": 5,
     },
     {
@@ -110,7 +110,7 @@ PRODUCTS = {
       "name": "Biscoff Dream Keecoo",
       "description": "A buttery, chewy cookie infused with Biscoff spread and loaded with Biscoff crumbs.",
       "price": 149.00,
-      "image": "_/theme/products/biscof-dream-kleecoo.webp",
+      "image": "_/theme/keecoo_pos/assets/thumbs/biscof-dream-kleecoo.webp",
       "sort_order": 6,
     },
   ],

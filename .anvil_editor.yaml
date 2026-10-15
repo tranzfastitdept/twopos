@@ -1,7 +1,5 @@
 unique_ids:
   assets:
-    client_code/MainForm/__init__.py: '1792076019841247590410866.26334'
-    client_code/MainForm/form_template.yaml: '179207601977130093892033.803192'
     keecoo_pos/assets/logo/keeco_logo.png: '1792076019910612992298849.3951'
     keecoo_pos/assets/products/biscof-dream-kleecoo.png: '1792076020007451588662234.5838'
     keecoo_pos/assets/products/classic-keecoo.png: '1792076020080401843132342.656'
@@ -19,8 +17,6 @@ unique_ids:
     keecoo_pos/data/shops.csv: '1792076021076911781649720.7023'
     keecoo_pos/data/transactions.csv: '1792076021119255639561689.73035'
     keecoo_pos/menu.txt: '1792076021182203061928583.58585'
-    server_code/ServerModule1.py: '1792076022494953104230065.6866'
-    server_code/catalog.py: '1792076022400388899881904.69794'
     static/analytics.js: '179207596470270080333077.47508'
     static/app.css: '1792075964755633705459473.1313'
     static/interaction-lock.js: '1792075964799135814859683.84'
@@ -28,10 +24,18 @@ unique_ids:
     templates/analytics.html: '1792075964901622037108441.049'
     templates/home.html: '1792075964944753693510598.312'
     templates/pos.html: '1792075965001963924132744.686'
+    workstation_specialty_coffee_pos/assets/logo/wssc_logo.png: '1792076780794.15067371069305802'
+    workstation_specialty_coffee_pos/assets/thumbs/cafe-latte.webp: '1792076780795.03908210407610724'
+    workstation_specialty_coffee_pos/assets/thumbs/dark-con-leche.webp: '1792076780797.48382620679447375'
+    workstation_specialty_coffee_pos/assets/thumbs/dulce-con-leche.webp: '1792076780798.021538192244322296'
+    workstation_specialty_coffee_pos/assets/thumbs/lavender-matcha.webp: '1792076780799.7000799372023261'
+    workstation_specialty_coffee_pos/assets/thumbs/seasalt-matcha.webp: '1792076780801.24089882521126893'
+    workstation_specialty_coffee_pos/assets/thumbs/white-con-leche.webp: '1792076780803.2750842254157764'
   forms:
     MainForm: '1792072614989773404111622.3213'
   modules: {}
-  scripts: {}
+  scripts:
+    Script: '1792076659802290605896028.0703'
   server_modules:
     ServerModule1: '1792075828987537002730879.5059'
     catalog: '1792075873178414398141363.6616'
