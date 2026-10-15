@@ -3,11 +3,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=/">
-  <title>Opening the register</title>
+  <title>{{ shop.name }} | Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v='4') }}">
 </head>
-<body>
-  <p>Opening the POS register… <a href="/">Continue</a></p>
-  <script>window.location.replace("/");</script>
+<body class="pos-page" data-shop="{{ shop.slug }}" data-name="{{ shop.name }}" data-receipt-header="{{ shop.receipt_header }}">
+  <header class="topbar">
+    {% if not dedicated %}
+    <a href="/" class="back-link" aria-label="Choose a different shop">←</a>
+    {% endif %}
+    <a class="brand" href="{{ '/' + shop.slug + '/' if dedicated else '/' }}">
+      <img src="/assets/{{ shop.slug }}/{{ shop.logo }}" alt="">
+      <span>{{ shop.name }}<small>POINT OF SALE</small></span>
+    </a>
+    <a class="nav-link" href="/{{ shop.slug }}/analytics">Sales &amp; history <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="register-layout">
+    <section class="catalog">
+      <div class="section-heading">
+        <div><p class="eyebrow">YOUR MENU</p><h1>Good things,<br>made to order.</h1></div>
+        <span class="menu-count" id="product-count"></span>
+      </div>
+      <div id="catalog-grid" class="product-grid" aria-live="polite"></div>
+    </section>
+    <aside class="checkout">
+      <div class="checkout-heading"><div><p class="eyebrow">CURRENT ORDER</p><h2>Your basket</h2></div><button id="clear-basket" class="text-button" type="button">Clear</button></div>
+      <div id="basket-items" class="basket-items"></div>
+      <p id="basket-empty" class="empty-basket">Your basket is empty.<br>Tap an item to get started.</p>
+      <div class="checkout-bottom">
+        <div class="subtotal"><span>Subtotal</span><strong id="basket-total">₱0.00</strong></div>
+        <fieldset class="payment-options">
+          <legend>Payment method</legend>
+          <label><input type="radio" name="payment-method" value="Cash" checked><span>Cash</span></label>
+          <label><input type="radio" name="payment-method" value="Digital"><span>Digital</span></label>
+        </fieldset>
+        <div id="cash-panel">
+          <label class="field-label" for="cash-received">Amount received</label>
+          <div class="cash-input"><span>₱</span><input id="cash-received" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></div>
+          <p id="change-message" class="change-message">Enter the amount received.</p>
+        </div>
+        <p id="checkout-error" class="error-message" role="alert"></p>
+        <button id="checkout-button" class="checkout-button" type="button" disabled>Charge <span id="button-total">₱0.00</span></button>
+        <p class="secure-note">Order total is verified at checkout</p>
+      </div>
+    </aside>
+  </main>
+  <div id="receipt-overlay" class="receipt-overlay" hidden></div>
+  <script src="{{ url_for('static', filename='interaction-lock.js', v='1') }}" defer></script>
+  <script src="{{ url_for('static', filename='pos.js', v='5') }}" defer></script>
 </body>
 </html>

@@ -321,19 +321,45 @@ class MainForm(MainFormTemplate):
 
   def render_analytics(self):
     data = anvil.server.call("get_shop_analytics", self.current_shop["slug"])
+    analytics = ColumnPanel(role="analytics-shell")
+    self.root.add_component(analytics)
+
+    title = ColumnPanel(role="analytics-title")
+    title.add_component(Label(text="BACK OFFICE", role="pos-eyebrow"))
+    title.add_component(Label(text="Sales at a glance.", role="analytics-title-heading"))
+    title.add_component(Label(
+      text="Transaction history for this register only.",
+      role="analytics-title-subtitle",
+    ))
+    analytics.add_component(title)
+
     summary = FlowPanel(role="analytics-summary")
-    self.root.add_component(summary)
-    for title, value in (
+    analytics.add_component(summary)
+    for metric_title, value in (
       ("Gross sales", data["gross_sales"]),
       ("Orders", str(data["order_count"])),
       ("Cash sales", data["cash_sales"]),
       ("Digital sales", data["digital_sales"]),
     ):
       card = ColumnPanel(role="metric-card")
-      card.add_component(Label(text=title, role="field-label"))
+      card.add_component(Label(text=metric_title, role="field-label"))
       card.add_component(Label(text=value, role="metric-value"))
       summary.add_component(card)
-    self.root.add_component(Label(text="Recent transactions", role="basket-title"))
+
+    history = ColumnPanel(role="history-section")
+    history_heading = FlowPanel(role="history-heading")
+    history_heading_copy = ColumnPanel(role="history-heading-copy")
+    history_heading_copy.add_component(Label(text="REGISTER LOG", role="pos-eyebrow"))
+    history_heading_copy.add_component(Label(text="Recent transactions", role="basket-title"))
+    history_heading.add_component(history_heading_copy)
+    history_heading.add_component(Label(
+      text="{} ORDERS".format(len(data["transactions"])),
+      role="history-count",
+    ))
+    history.add_component(history_heading)
+
+    transactions = ColumnPanel(role="transactions-list")
+    history.add_component(transactions)
     for order in data["transactions"]:
       names = ", ".join(
         "{} × {}".format(item["quantity"], item["name"])
@@ -356,9 +382,12 @@ class MainForm(MainFormTemplate):
         lambda receipt=order, **event_args: self.show_receipt(receipt),
       )
       row.add_component(receipt_button)
-      self.root.add_component(row)
+      transactions.add_component(row)
     if not data["transactions"]:
-      self.root.add_component(Label(text="No completed orders yet.", role="basket-empty"))
+      transactions.add_component(Label(
+        text="No orders yet. Completed checkouts will appear here.",
+        role="basket-empty",
+      ))
 
   def show_receipt(self, order):
     receipt = ColumnPanel(role="receipt")

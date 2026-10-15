@@ -39,6 +39,10 @@ body {
 }
 
 body {
+  border-top: 1px solid #2f352f;
+}
+
+body {
   overflow-x: hidden;
 }
 
@@ -133,7 +137,7 @@ REGISTER HEADER
   min-height: 55px;
   align-items: center;
   gap: 11px;
-  padding: 0 max(30px, calc((100vw - 1360px) / 2));
+  padding: 0 max(24px, calc((100vw - 1052px) / 2));
 }
 
 .anvil-role-back-link {
@@ -143,16 +147,16 @@ REGISTER HEADER
 
 .anvil-role-back-link > button {
   display: grid;
-  width: 34px;
-  height: 34px;
-  min-height: 34px;
+  width: 26px;
+  height: 26px;
+  min-height: 26px;
   place-items: center;
   padding: 0;
   border: 1px solid var(--pos-line);
   border-radius: 50%;
   background: var(--pos-white);
   color: #61665d;
-  font-size: 17px;
+  font-size: 14px;
   line-height: 1;
 }
 
@@ -164,8 +168,8 @@ REGISTER HEADER
 
 .anvil-role-brand-logo {
   flex: 0 0 auto;
-  width: 31px;
-  height: 36px;
+  width: 29px;
+  height: 29px;
 }
 
 .anvil-role-brand-logo img {
@@ -231,8 +235,8 @@ REGISTER AND CATALOG LAYOUT
 ========================================================= */
 
 .anvil-role-register-layout {
-  width: min(calc(100% - 48px), 1004px) !important;
-  max-width: 1004px !important;
+  width: min(calc(100% - 48px), 1022px) !important;
+  max-width: 1022px !important;
   margin: 0 auto !important;
   padding: 31px 0 40px !important;
   box-sizing: border-box;
@@ -241,7 +245,7 @@ REGISTER AND CATALOG LAYOUT
 .anvil-role-register-layout > .anvil-flow-panel-gutter {
   display: grid !important;
   width: 100%;
-  grid-template-columns: minmax(0, 1fr) 276px;
+  grid-template-columns: 686px 276px;
   align-items: start;
   gap: 27px;
 }
@@ -287,7 +291,7 @@ REGISTER AND CATALOG LAYOUT
   margin: 0;
   white-space: pre-line;
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(34px, 3.2vw, 40px);
+  font-size: clamp(34px, 3.1vw, 38px);
   font-weight: 500;
   letter-spacing: -.045em;
   line-height: 1.03 !important;
@@ -333,9 +337,9 @@ PRODUCT GRID
   min-height: 227px;
   overflow: hidden;
   border: 1px solid var(--pos-line);
-  border-radius: 12px;
+  border-radius: 4px;
   background: var(--pos-white);
-  box-shadow: 0 3px 12px rgba(36, 40, 32, .045);
+  box-shadow: none;
   cursor: pointer;
   transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
 }
@@ -383,7 +387,7 @@ PRODUCT GRID
   margin: 8px 10px 0;
   overflow: hidden;
   color: var(--pos-ink);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   line-height: 1.2 !important;
   -webkit-box-orient: vertical;
@@ -431,9 +435,25 @@ PRODUCT GRID
   border-radius: inherit;
   background: transparent;
   color: transparent;
-  opacity: 0;
+  opacity: 1;
   cursor: pointer;
   touch-action: manipulation;
+}
+
+.anvil-role-product-card-action > button::after {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--pos-accent-pale);
+  color: var(--pos-accent);
+  content: "+";
+  font-size: 13px;
+  line-height: 1;
 }
 
 .anvil-role-product-card-action > button:focus-visible {
@@ -717,7 +737,7 @@ CHECKOUT TOTALS AND PAYMENT
 
 .anvil-role-cash-input-wrap {
   width: 100%;
-  height: 36px;
+  height: 30px;
   border: 1px solid var(--pos-line);
   border-radius: 4px;
 }
@@ -737,7 +757,7 @@ CHECKOUT TOTALS AND PAYMENT
 
 input.anvil-role-cash-input {
   width: 100%;
-  height: 30px;
+  height: 25px;
   padding: 0;
   border: 0;
   outline: 0;
@@ -775,7 +795,7 @@ input.anvil-role-cash-input {
 
 .anvil-role-charge-action > button {
   width: 100%;
-  min-height: 40px;
+  min-height: 33px;
   padding: 0 13px;
   border: 0;
   border-radius: 4px;
@@ -895,6 +915,81 @@ PICKER, HISTORY AND RECEIPT
   margin: 35px 0 26px;
 }
 
+.anvil-role-analytics-shell {
+  width: min(calc(100% - 56px), 1120px) !important;
+  max-width: 1120px !important;
+  margin: 0 auto !important;
+  padding: 48px 0 70px !important;
+}
+
+.anvil-role-analytics-title {
+  margin-bottom: 27px;
+}
+
+.anvil-role-analytics-title-heading {
+  display: block;
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 43px;
+  font-weight: 500;
+  letter-spacing: -.045em;
+  line-height: 1.08 !important;
+}
+
+.anvil-role-analytics-title-subtitle {
+  margin-top: 10px;
+  color: var(--pos-muted);
+  font-size: 12px;
+}
+
+.anvil-role-analytics-summary > .anvil-flow-panel-gutter {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.anvil-role-metric-card:first-child {
+  border-color: #d9e4d8;
+  background: #edf3eb;
+}
+
+.anvil-role-metric-card:first-child .anvil-role-metric-value {
+  color: var(--pos-accent-dark);
+}
+
+.anvil-role-history-section {
+  margin-top: 40px;
+  border: 1px solid var(--pos-line);
+  border-radius: 5px;
+  background: var(--pos-white);
+}
+
+.anvil-role-history-heading {
+  border-bottom: 1px solid var(--pos-line);
+}
+
+.anvil-role-history-heading > .anvil-flow-panel-gutter {
+  display: flex !important;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 21px 23px;
+}
+
+.anvil-role-history-heading-copy > .anvil-panel-section-container {
+  padding: 0;
+}
+
+.anvil-role-history-count {
+  padding-bottom: 4px;
+  color: var(--pos-muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.anvil-role-transactions-list > .anvil-panel-section-container {
+  padding: 0 23px;
+}
+
 .anvil-role-metric-card {
   min-height: 130px;
   padding: 19px;
@@ -1006,6 +1101,15 @@ RESPONSIVE TABLET AND MOBILE LAYOUT
 
   .anvil-role-analytics-summary > .anvil-flow-panel-gutter {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .anvil-role-analytics-shell {
+    width: min(calc(100% - 32px), 540px) !important;
+    padding-top: 32px !important;
+  }
+
+  .anvil-role-analytics-title-heading {
+    font-size: 36px;
   }
 }
 
