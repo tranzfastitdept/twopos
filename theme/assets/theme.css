@@ -1,0 +1,560 @@
+/* The original visual system lives in theme/assets/static/app.css. The rules
+   below adapt that system to the Anvil components created by MainForm. */
+
+html,
+body {
+  min-width: 320px;
+  background: var(--paper, #f6f5f0);
+}
+
+.anvil-role-pos-shell {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 0 52px;
+  background: var(--paper, #f6f5f0);
+  color: var(--ink, #242820);
+}
+
+.anvil-role-pos-shell .anvil-panel-section-container {
+  padding: 0;
+}
+
+.anvil-role-pos-shell .anvil-label {
+  line-height: 1.45;
+}
+
+.anvil-role-pos-eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent, #456b50);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.anvil-role-pos-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 500;
+  letter-spacing: -.045em;
+  line-height: 1.08;
+}
+
+.anvil-role-pos-subtitle {
+  max-width: 440px;
+  margin: 18px 0 0;
+  color: var(--muted, #85877f);
+  line-height: 1.7;
+}
+
+.anvil-role-shop-choices {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 36px;
+}
+
+.anvil-role-shop-card {
+  display: flex !important;
+  min-height: 220px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 26px;
+  border: 1px solid var(--line, #e9e8e1);
+  border-radius: 7px;
+  background: var(--white, #fff);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.anvil-role-shop-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px #33311a12;
+}
+
+.anvil-role-shop-card .anvil-image {
+  width: 88px;
+  height: 76px;
+  margin-bottom: 22px;
+}
+
+.anvil-role-shop-card .anvil-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.anvil-role-shop-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 21px;
+}
+
+.anvil-role-pos-button,
+.anvil-role-pos-quiet-button {
+  margin-top: 13px;
+}
+
+.anvil-role-pos-button > button,
+.anvil-role-pos-quiet-button > button,
+.anvil-role-quantity-button > button {
+  min-height: 40px;
+  border-radius: 4px;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+}
+
+.anvil-role-pos-button > button {
+  width: 100%;
+  padding: 0 15px;
+  border: 0;
+  background: var(--accent, #456b50);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.anvil-role-pos-button > button:hover:not(:disabled),
+.anvil-role-pos-button > button:focus-visible {
+  background: var(--accent-dark, #31503a);
+}
+
+.anvil-role-pos-button > button:disabled {
+  background: #c9cdc6;
+  cursor: not-allowed;
+}
+
+.anvil-role-pos-quiet-button > button {
+  min-height: 34px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted, #85877f);
+  font-size: 11px;
+}
+
+.anvil-role-pos-quiet-button > button:hover,
+.anvil-role-pos-quiet-button > button:focus-visible {
+  color: var(--accent, #456b50);
+}
+
+.anvil-role-pos-header {
+  display: flex !important;
+  min-height: 74px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 max(28px, calc((100vw - 1360px) / 2));
+  border-bottom: 1px solid var(--line, #e9e8e1);
+  background: var(--white, #fff);
+}
+
+.anvil-role-pos-header .anvil-image {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+}
+
+.anvil-role-pos-header .anvil-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.anvil-role-pos-brand {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.anvil-role-pos-header .anvil-role-pos-quiet-button:last-child {
+  margin-left: auto;
+}
+
+.anvil-role-register-layout {
+  display: grid !important;
+  width: min(100% - 56px, 1320px);
+  grid-template-columns: minmax(0, 1fr) 370px;
+  gap: 36px;
+  margin: 0 auto;
+  padding: 40px 0 0;
+  align-items: start;
+}
+
+.anvil-role-menu-panel {
+  min-width: 0;
+}
+
+.anvil-role-product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 26px;
+}
+
+.anvil-role-product-card {
+  display: flex !important;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--line, #e9e8e1);
+  border-radius: 6px;
+  background: var(--white, #fff);
+  transition: transform .15s, box-shadow .15s;
+}
+
+.anvil-role-product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 24px #29291813;
+}
+
+.anvil-role-product-card .anvil-image {
+  display: block;
+  width: 100%;
+  height: 185px !important;
+  overflow: hidden;
+  background: #eeede7;
+}
+
+.anvil-role-product-card .anvil-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.anvil-role-product-name {
+  margin: 14px 14px 0;
+  padding-right: 17px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.anvil-role-product-description {
+  min-height: 35px;
+  margin: 7px 14px 0;
+  color: var(--muted, #85877f);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.anvil-role-product-price {
+  margin: 10px 14px 0;
+  color: var(--accent, #456b50);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.anvil-role-product-card .anvil-role-pos-button {
+  margin: 13px 14px 16px;
+}
+
+.anvil-role-basket-panel {
+  display: flex !important;
+  min-height: 560px;
+  max-height: calc(100vh - 100px);
+  flex-direction: column;
+  overflow: auto;
+  position: sticky;
+  top: 20px;
+  padding: 0 21px 22px;
+  border: 1px solid var(--line, #e9e8e1);
+  border-radius: 7px;
+  background: var(--white, #fff);
+}
+
+.anvil-role-basket-heading {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 -21px;
+  padding: 23px 21px 20px;
+  border-bottom: 1px solid var(--line, #e9e8e1);
+}
+
+.anvil-role-basket-heading .anvil-role-pos-quiet-button {
+  margin: 0;
+}
+
+.anvil-role-basket-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.anvil-role-basket-empty {
+  margin: 42px 16px;
+  color: #989a92;
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.anvil-role-basket-row {
+  display: flex !important;
+  min-height: 52px;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0efe9;
+}
+
+.anvil-role-basket-item-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.anvil-role-basket-line-total {
+  flex: 0 0 auto;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.anvil-role-quantity-button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.anvil-role-quantity-button > button {
+  display: grid;
+  width: 24px;
+  min-height: 24px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line, #e9e8e1);
+  background: var(--white, #fff);
+  color: var(--ink, #242820);
+  font-size: 15px;
+}
+
+.anvil-role-quantity-label {
+  min-width: 12px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.anvil-role-basket-total {
+  margin: 20px 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.anvil-role-payment-options {
+  display: flex !important;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.anvil-role-payment-options > * {
+  flex: 1 1 0;
+}
+
+.anvil-role-field-label {
+  margin: 7px 0 6px;
+  color: #63675e;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+input.anvil-role-cash-input {
+  width: 100%;
+  height: 39px;
+  padding: 0 10px;
+  border: 1px solid var(--line, #e9e8e1);
+  border-radius: 4px;
+  outline: 0;
+  color: var(--ink, #242820);
+  font-size: 12px;
+}
+
+input.anvil-role-cash-input:focus {
+  border-color: var(--accent, #456b50);
+}
+
+.anvil-role-change-message {
+  min-height: 16px;
+  margin: 6px 0 2px;
+  color: #898b83;
+  font-size: 10px;
+}
+
+.anvil-role-basket-panel > .anvil-role-pos-button:last-child {
+  margin-top: 10px;
+}
+
+.anvil-role-analytics-summary {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+  margin: 40px auto 28px;
+}
+
+.anvil-role-metric-card {
+  display: flex !important;
+  min-height: 140px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid var(--line, #e9e8e1);
+  border-radius: 5px;
+  background: var(--white, #fff);
+}
+
+.anvil-role-metric-card .anvil-role-field-label {
+  margin: 0;
+}
+
+.anvil-role-metric-value {
+  margin-top: 9px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+}
+
+.anvil-role-history-row {
+  display: flex !important;
+  min-height: 69px;
+  align-items: center;
+  gap: 18px;
+  padding: 13px 0;
+  border-bottom: 1px solid #f0efe9;
+}
+
+.anvil-role-history-detail {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted, #85877f);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.anvil-role-history-row .anvil-role-pos-quiet-button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.anvil-role-receipt {
+  min-width: 320px;
+  padding: 31px 29px;
+  background: var(--white, #fff);
+}
+
+.anvil-role-receipt-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 23px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.anvil-role-receipt-line,
+.anvil-role-receipt-footer,
+.anvil-role-history-detail {
+  color: #777;
+  font-size: 10px;
+}
+
+.anvil-role-receipt-total {
+  margin: 19px 0;
+  border-top: 1px dashed #d9d9d3;
+  border-bottom: 1px dashed #d9d9d3;
+  padding: 14px 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.anvil-role-receipt-footer {
+  margin-top: 17px;
+  text-align: center;
+}
+
+.anvil-modal-content {
+  border-radius: 7px;
+  box-shadow: 0 18px 55px #0003;
+}
+
+@media (max-width: 1050px) {
+  .anvil-role-register-layout {
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 22px;
+  }
+
+  .anvil-role-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 740px) {
+  .anvil-role-pos-header {
+    min-height: 64px;
+    padding: 0 16px;
+  }
+
+  .anvil-role-pos-header .anvil-image {
+    width: 35px;
+    height: 35px;
+  }
+
+  .anvil-role-register-layout {
+    width: min(100% - 32px, 540px);
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 26px;
+  }
+
+  .anvil-role-basket-panel {
+    position: static;
+    min-height: 440px;
+    max-height: none;
+  }
+
+  .anvil-role-product-grid {
+    gap: 10px;
+  }
+
+  .anvil-role-product-card .anvil-image {
+    height: 155px !important;
+  }
+
+  .anvil-role-analytics-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .anvil-role-metric-card {
+    min-height: 116px;
+    padding: 15px;
+  }
+
+  .anvil-role-metric-value {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 390px) {
+  .anvil-role-shop-choices,
+  .anvil-role-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .anvil-role-shop-card {
+    min-height: 185px;
+  }
+
+  .anvil-role-product-card .anvil-image {
+    height: 125px !important;
+  }
+}

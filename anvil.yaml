@@ -85,6 +85,8 @@ name: TwoPOS
 native_deps:
   head_html: |2
 
+    <link rel="stylesheet" href="_/theme/static/app.css">
+
     <style>
       .anvil-panel-section-container { padding: 0 15px; }
     </style>
