@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>TwoPOS | Choose a register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v='2') }}">
+</head>
+<body class="home-page">
+  <main class="home-shell">
+    <p class="eyebrow">TWO STORES · TWO REGISTERS</p>
+    <h1>Choose your<br><span>counter.</span></h1>
+    <p class="home-copy">Pick a shop to open its separate point of sale. Each register keeps its own catalog and sales records.</p>
+    <div class="shop-choices">
+      {% for shop in shops %}
+      <a class="shop-choice" href="/{{ shop.slug }}/">
+        <span class="choice-mark">0{{ loop.index }}</span>
+        <img src="/assets/{{ shop.slug }}/{{ shop.logo }}" alt="">
+        <span class="choice-name">{{ shop.name }}</span>
+        <span class="choice-open">Open register <span aria-hidden="true">↗</span></span>
+      </a>
+      {% endfor %}
+    </div>
+    <footer>Consolidated POS - ACR</footer>
+      
+  </main>
+</body>
+</html>

@@ -1,0 +1,4 @@
+container:
+  type: ColumnPanel
+  properties: {}
+components: []
