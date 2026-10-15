@@ -3,7 +3,7 @@ from ._anvil_designer import MainFormTemplate
 
 import anvil
 import anvil.js
-from anvil import Button, ColumnPanel, FlowPanel, Image, Label, RadioButton, TextBox
+from anvil import Button, ColumnPanel, FlowPanel, GridPanel, Image, Label, RadioButton, TextBox
 import math
 
 
@@ -92,11 +92,20 @@ class MainForm(MainFormTemplate):
       self.render_analytics()
       return
 
-    layout = FlowPanel(role="register-layout")
+    layout = GridPanel(role="register-layout")
     self.root.add_component(layout)
 
     menu = ColumnPanel(role="menu-panel")
-    layout.add_component(menu)
+    layout.add_component(
+      menu,
+      row="register",
+      col_lg=0,
+      width_lg=8,
+      col_md=0,
+      width_md=8,
+      col_sm=0,
+      width_sm=12,
+    )
     section_heading = FlowPanel(role="section-heading")
     heading_copy = FlowPanel(role="section-heading-copy")
     heading_copy.add_component(Label(text="YOUR MENU", role="pos-eyebrow"))
@@ -104,9 +113,9 @@ class MainForm(MainFormTemplate):
     section_heading.add_component(heading_copy)
     section_heading.add_component(Label(text="{} ITEMS".format(len(self.products)), role="menu-count"))
     menu.add_component(section_heading)
-    grid = FlowPanel(role="product-grid")
+    grid = GridPanel(role="product-grid")
     menu.add_component(grid)
-    for product in self.products:
+    for index, product in enumerate(self.products):
       card = ColumnPanel(role="product-card")
       card.add_component(Image(
         source=product["image"],
@@ -123,10 +132,28 @@ class MainForm(MainFormTemplate):
         lambda product_id=product["product_id"], **event_args: self.change_quantity(product_id, 1),
       )
       card.add_component(add_button)
-      grid.add_component(card)
+      grid.add_component(
+        card,
+        row=str(index // 3),
+        col_lg=(index % 3) * 4,
+        width_lg=4,
+        col_md=(index % 2) * 6,
+        width_md=6,
+        col_sm=0,
+        width_sm=12,
+      )
 
     self.basket_panel = ColumnPanel(role="basket-panel")
-    layout.add_component(self.basket_panel)
+    layout.add_component(
+      self.basket_panel,
+      row="register",
+      col_lg=8,
+      width_lg=4,
+      col_md=8,
+      width_md=4,
+      col_sm=0,
+      width_sm=12,
+    )
     self.render_basket()
 
   def change_quantity(self, product_id, change):

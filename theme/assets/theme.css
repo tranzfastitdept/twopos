@@ -1,14 +1,37 @@
-/* The original visual system lives in theme/assets/static/app.css. The rules
-   below adapt that system to the Anvil components created by MainForm. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+
+:root {
+  --pos-ink: #242820;
+  --pos-muted: #85877f;
+  --pos-paper: #f6f5f0;
+  --pos-white: #ffffff;
+  --pos-line: #e9e8e1;
+  --pos-accent: #456b50;
+  --pos-accent-dark: #31503a;
+  --pos-accent-pale: #e9f0e8;
+  --pos-danger: #b44938;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
 
 html,
 body {
+  width: 100%;
   min-width: 320px;
-  background: var(--paper, #f6f5f0);
+  min-height: 100%;
+  margin: 0;
+  background: var(--pos-paper);
+  color: var(--pos-ink);
 }
 
-.anvil-show-banner {
-  margin-top: 0 !important;
+body {
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font: inherit;
 }
 
 #anvil-header,
@@ -17,25 +40,40 @@ body {
 }
 
 .anvil-role-pos-form,
-.anvil-role-pos-form .anvil-panel-section,
-.anvil-role-pos-form .anvil-panel-section-container,
-.anvil-role-pos-form .anvil-panel-section-gutter {
-  width: 100%;
+.anvil-role-pos-form > .anvil-panel-section-container,
+.anvil-role-pos-form > .anvil-panel-section-container > .anvil-panel-section,
+.anvil-role-pos-form > .anvil-panel-section-container > .anvil-panel-section > .anvil-panel-section-container,
+.anvil-role-pos-form .pos-viewport,
+.anvil-role-pos-shell {
+  width: 100% !important;
   max-width: none !important;
-  margin: 0;
-  padding: 0;
+  min-width: 0;
+}
+
+.anvil-role-pos-form,
+.anvil-role-pos-form > .anvil-panel-section-container,
+.anvil-role-pos-form .pos-viewport,
+.anvil-role-pos-shell {
+  min-height: 100vh;
+}
+
+.anvil-role-pos-form > .anvil-panel-section-container,
+.anvil-role-pos-form > .anvil-panel-section-container > .anvil-panel-section,
+.anvil-role-pos-form > .anvil-panel-section-container > .anvil-panel-section > .anvil-panel-section-container,
+.anvil-role-pos-form .pos-viewport,
+.anvil-role-pos-shell > .anvil-panel-section-container {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.anvil-role-pos-form .pos-viewport {
+  display: block;
+  overflow: auto;
 }
 
 .anvil-role-pos-shell {
-  width: 100%;
-  min-height: 100vh;
-  padding: 0 0 52px;
-  background: var(--paper, #f6f5f0);
-  color: var(--ink, #242820);
-}
-
-.anvil-role-pos-shell .anvil-panel-section-container {
-  padding: 0;
+  background: var(--pos-paper);
+  color: var(--pos-ink);
 }
 
 .anvil-role-pos-shell .anvil-label {
@@ -43,630 +81,30 @@ body {
 }
 
 .anvil-role-pos-eyebrow {
-  margin: 0 0 10px;
-  color: var(--accent, #456b50);
-  font-size: 10px;
+  margin: 0 0 9px;
+  color: var(--pos-accent);
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: .16em;
+  letter-spacing: .17em;
+  line-height: 1.2 !important;
   text-transform: uppercase;
 }
 
-.anvil-role-pos-title {
-  margin: 0;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(38px, 5vw, 62px);
-  font-weight: 500;
-  letter-spacing: -.045em;
-  line-height: 1.08;
-}
-
-.anvil-role-pos-subtitle {
-  max-width: 440px;
-  margin: 18px 0 0;
-  color: var(--muted, #85877f);
-  line-height: 1.7;
-}
-
-.anvil-role-shop-choices {
-  display: block !important;
-  width: 100%;
-  margin-top: 36px;
-}
-
-.anvil-role-shop-choices > .anvil-flow-panel-gutter {
-  display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  width: 100%;
-}
-
-.anvil-role-shop-choices > .anvil-flow-panel-gutter > .anvil-flow-panel-item,
-.anvil-role-register-layout > .anvil-flow-panel-gutter > .anvil-flow-panel-item,
-.anvil-role-product-grid > .anvil-flow-panel-gutter > .anvil-flow-panel-item {
-  min-width: 0;
-}
-
-.anvil-role-shop-card {
-  display: flex !important;
-  min-height: 220px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-end;
-  overflow: hidden;
-  padding: 26px;
-  border: 1px solid var(--line, #e9e8e1);
-  border-radius: 7px;
-  background: var(--white, #fff);
-  transition: transform .2s, box-shadow .2s;
-}
-
-.anvil-role-shop-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 32px #33311a12;
-}
-
-.anvil-role-shop-card .anvil-image {
-  width: 88px;
-  height: 76px;
-  margin-bottom: 22px;
-}
-
-.anvil-role-shop-card .anvil-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: left center;
-}
-
-.anvil-role-shop-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 21px;
-}
-
-.anvil-role-pos-button,
-.anvil-role-pos-quiet-button {
-  margin-top: 13px;
-}
-
-.anvil-role-pos-button > button,
-.anvil-role-pos-quiet-button > button,
-.anvil-role-quantity-button > button {
-  min-height: 40px;
-  border-radius: 4px;
-  font-family: "DM Sans", "Segoe UI", sans-serif;
-  cursor: pointer;
-  transition: background .15s, border-color .15s, color .15s, transform .15s;
-}
-
-.anvil-role-pos-button > button {
-  width: 100%;
-  padding: 0 15px;
-  border: 0;
-  background: var(--accent, #456b50);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.anvil-role-pos-button > button:hover:not(:disabled),
-.anvil-role-pos-button > button:focus-visible {
-  background: var(--accent-dark, #31503a);
-}
-
-.anvil-role-pos-button > button:disabled {
-  background: #c9cdc6;
-  cursor: not-allowed;
-}
-
-.anvil-role-pos-quiet-button > button {
-  min-height: 34px;
-  padding: 4px 0;
-  border: 0;
-  background: transparent;
-  color: var(--muted, #85877f);
-  font-size: 11px;
-}
-
-.anvil-role-pos-quiet-button > button:hover,
-.anvil-role-pos-quiet-button > button:focus-visible {
-  color: var(--accent, #456b50);
-}
+/* Register header */
 
 .anvil-role-pos-header {
-  display: block !important;
   width: 100%;
-  min-height: 74px;
-  border-bottom: 1px solid var(--line, #e9e8e1);
-  background: var(--white, #fff);
+  min-height: 54px;
+  border-bottom: 1px solid var(--pos-line);
+  background: var(--pos-white);
 }
 
 .anvil-role-pos-header > .anvil-flow-panel-gutter {
   display: flex !important;
-  min-height: 74px;
-  align-items: center;
-  gap: 12px;
-  padding: 0 max(28px, calc((100vw - 1360px) / 2));
-}
-
-.anvil-role-pos-header .anvil-image {
-  flex: 0 0 auto;
-  width: 42px;
-  height: 42px;
-}
-
-.anvil-role-pos-header .anvil-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.anvil-role-pos-brand {
-  min-width: 0;
-  overflow: hidden;
-  font-size: 13px;
-  font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.anvil-role-pos-header .anvil-role-pos-quiet-button:last-child {
-  margin-left: auto;
-}
-
-.anvil-role-register-layout {
-  display: block !important;
-  width: 100%;
-}
-
-.anvil-role-register-layout > .anvil-flow-panel-gutter {
-  display: grid !important;
-  width: min(100% - 56px, 1320px);
-  grid-template-columns: minmax(0, 1fr) 370px;
-  gap: 36px;
-  margin: 0 auto;
-  padding: 40px 0 0;
-  align-items: start;
-}
-
-.anvil-role-menu-panel {
-  min-width: 0;
-}
-
-.anvil-role-product-grid {
-  display: block !important;
-  width: 100%;
-}
-
-.anvil-role-product-grid > .anvil-flow-panel-gutter {
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 15px;
-  margin-top: 26px;
-}
-
-.anvil-role-product-card {
-  display: flex !important;
-  min-width: 0;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 0;
-  border: 1px solid var(--line, #e9e8e1);
-  border-radius: 6px;
-  background: var(--white, #fff);
-  transition: transform .15s, box-shadow .15s;
-}
-
-.anvil-role-product-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 9px 24px #29291813;
-}
-
-.anvil-role-product-card .anvil-image {
-  display: block;
-  width: 100%;
-  height: 185px !important;
-  overflow: hidden;
-  background: #eeede7;
-}
-
-.anvil-role-product-card .anvil-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.anvil-role-product-name {
-  margin: 14px 14px 0;
-  padding-right: 17px;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.anvil-role-product-description {
-  min-height: 35px;
-  margin: 7px 14px 0;
-  color: var(--muted, #85877f);
-  font-size: 10px;
-  line-height: 1.5;
-}
-
-.anvil-role-product-price {
-  margin: 10px 14px 0;
-  color: var(--accent, #456b50);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.anvil-role-product-card .anvil-role-pos-button {
-  margin: 13px 14px 16px;
-}
-
-.anvil-role-basket-panel {
-  display: flex !important;
-  min-height: 560px;
-  max-height: calc(100vh - 100px);
-  flex-direction: column;
-  overflow: auto;
-  position: sticky;
-  top: 20px;
-  padding: 0 21px 22px;
-  border: 1px solid var(--line, #e9e8e1);
-  border-radius: 7px;
-  background: var(--white, #fff);
-}
-
-.anvil-role-basket-heading {
-  display: block !important;
-  width: 100%;
-}
-
-.anvil-role-basket-heading > .anvil-flow-panel-gutter {
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-  padding: 23px 21px 20px;
-  margin: 0 -21px;
-  border-bottom: 1px solid var(--line, #e9e8e1);
-}
-
-.anvil-role-basket-heading .anvil-role-pos-quiet-button {
-  margin: 0;
-}
-
-.anvil-role-basket-title {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 22px;
-  font-weight: 500;
-}
-
-.anvil-role-basket-empty {
-  margin: 42px 16px;
-  color: #989a92;
-  font-size: 12px;
-  line-height: 1.8;
-  text-align: center;
-}
-
-.anvil-role-basket-row {
-  display: block !important;
-  width: 100%;
-}
-
-.anvil-role-basket-row > .anvil-flow-panel-gutter {
-  display: flex !important;
-  min-height: 52px;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 0;
-  border-bottom: 1px solid #f0efe9;
-}
-
-.anvil-role-basket-item-name {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  font-size: 11px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.anvil-role-basket-line-total {
-  flex: 0 0 auto;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.anvil-role-quantity-button {
-  flex: 0 0 auto;
-  margin: 0;
-}
-
-.anvil-role-quantity-button > button {
-  display: grid;
-  width: 24px;
-  min-height: 24px;
-  place-items: center;
-  padding: 0;
-  border: 1px solid var(--line, #e9e8e1);
-  background: var(--white, #fff);
-  color: var(--ink, #242820);
-  font-size: 15px;
-}
-
-.anvil-role-quantity-label {
-  min-width: 12px;
-  text-align: center;
-  font-size: 11px;
-}
-
-.anvil-role-basket-total {
-  margin: 20px 0;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.anvil-role-payment-options {
-  display: block !important;
-  width: 100%;
-}
-
-.anvil-role-payment-options > .anvil-flow-panel-gutter {
-  display: flex !important;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.anvil-role-payment-options > * {
-  flex: 1 1 0;
-}
-
-.anvil-role-field-label {
-  margin: 7px 0 6px;
-  color: #63675e;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-input.anvil-role-cash-input {
-  width: 100%;
-  height: 39px;
-  padding: 0 10px;
-  border: 1px solid var(--line, #e9e8e1);
-  border-radius: 4px;
-  outline: 0;
-  color: var(--ink, #242820);
-  font-size: 12px;
-}
-
-input.anvil-role-cash-input:focus {
-  border-color: var(--accent, #456b50);
-}
-
-.anvil-role-change-message {
-  min-height: 16px;
-  margin: 6px 0 2px;
-  color: #898b83;
-  font-size: 10px;
-}
-
-.anvil-role-basket-panel > .anvil-role-pos-button:last-child {
-  margin-top: 10px;
-}
-
-.anvil-role-analytics-summary {
-  display: block !important;
-  width: 100%;
-}
-
-.anvil-role-analytics-summary > .anvil-flow-panel-gutter {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 13px;
-  margin: 40px auto 28px;
-}
-
-.anvil-role-metric-card {
-  display: flex !important;
-  min-height: 140px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 20px;
-  border: 1px solid var(--line, #e9e8e1);
-  border-radius: 5px;
-  background: var(--white, #fff);
-}
-
-.anvil-role-metric-card .anvil-role-field-label {
-  margin: 0;
-}
-
-.anvil-role-metric-value {
-  margin-top: 9px;
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -.03em;
-}
-
-.anvil-role-history-row {
-  display: block !important;
-  width: 100%;
-}
-
-.anvil-role-history-row > .anvil-flow-panel-gutter {
-  display: flex !important;
-  min-height: 69px;
-  align-items: center;
-  gap: 18px;
-  padding: 13px 0;
-  border-bottom: 1px solid #f0efe9;
-}
-
-.anvil-role-history-detail {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  color: var(--muted, #85877f);
-  font-size: 11px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.anvil-role-history-row .anvil-role-pos-quiet-button {
-  flex: 0 0 auto;
-  margin: 0;
-}
-
-.anvil-role-receipt {
-  min-width: 320px;
-  padding: 31px 29px;
-  background: var(--white, #fff);
-}
-
-.anvil-role-receipt-title {
-  margin: 0;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 23px;
-  font-weight: 500;
-  text-align: center;
-}
-
-.anvil-role-receipt-line,
-.anvil-role-receipt-footer,
-.anvil-role-history-detail {
-  color: #777;
-  font-size: 10px;
-}
-
-.anvil-role-receipt-total {
-  margin: 19px 0;
-  border-top: 1px dashed #d9d9d3;
-  border-bottom: 1px dashed #d9d9d3;
-  padding: 14px 0;
-  font-size: 14px;
-  font-weight: 700;
-  text-align: right;
-}
-
-.anvil-role-receipt-footer {
-  margin-top: 17px;
-  text-align: center;
-}
-
-.anvil-modal-content {
-  border-radius: 7px;
-  box-shadow: 0 18px 55px #0003;
-}
-
-@media (max-width: 1050px) {
-  .anvil-role-register-layout {
-    width: 100%;
-  }
-
-  .anvil-role-register-layout > .anvil-flow-panel-gutter {
-    grid-template-columns: minmax(0, 1fr) 330px;
-    gap: 22px;
-  }
-
-  .anvil-role-product-grid {
-    width: 100%;
-  }
-
-  .anvil-role-product-grid > .anvil-flow-panel-gutter {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 740px) {
-  .anvil-role-pos-header {
-    min-height: 64px;
-    padding: 0 16px;
-  }
-
-  .anvil-role-pos-header .anvil-image {
-    width: 35px;
-    height: 35px;
-  }
-
-  .anvil-role-register-layout {
-    width: 100%;
-  }
-
-  .anvil-role-register-layout > .anvil-flow-panel-gutter {
-    width: min(100% - 32px, 540px);
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding-top: 26px;
-  }
-
-  .anvil-role-basket-panel {
-    position: static;
-    min-height: 440px;
-    max-height: none;
-  }
-
-  .anvil-role-product-grid {
-    gap: 10px;
-  }
-
-  .anvil-role-product-card .anvil-image {
-    height: 155px !important;
-  }
-
-  .anvil-role-analytics-summary {
-    width: 100%;
-  }
-
-  .anvil-role-analytics-summary > .anvil-flow-panel-gutter {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 9px;
-  }
-
-  .anvil-role-metric-card {
-    min-height: 116px;
-    padding: 15px;
-  }
-
-  .anvil-role-metric-value {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 390px) {
-  .anvil-role-shop-choices,
-  .anvil-role-product-grid {
-    width: 100%;
-  }
-
-  .anvil-role-shop-choices > .anvil-flow-panel-gutter,
-  .anvil-role-product-grid > .anvil-flow-panel-gutter {
-    grid-template-columns: 1fr;
-  }
-
-  .anvil-role-shop-card {
-    min-height: 185px;
-  }
-
-  .anvil-role-product-card .anvil-image {
-    height: 125px !important;
-  }
-}
-
-/* Exact register composition used by the original POS screen. */
-
-.anvil-role-pos-shell {
-  padding-bottom: 42px;
-}
-
-.anvil-role-pos-header {
   min-height: 54px;
-  border-bottom-color: var(--line, #e9e8e1);
-}
-
-.anvil-role-pos-header > .anvil-flow-panel-gutter {
-  min-height: 54px;
-  padding: 0 max(28px, calc((100vw - 1360px) / 2));
+  align-items: center;
   gap: 11px;
+  padding: 0 max(30px, calc((100vw - 1360px) / 2));
 }
 
 .anvil-role-back-link {
@@ -681,17 +119,24 @@ input.anvil-role-cash-input:focus {
   min-height: 34px;
   place-items: center;
   padding: 0;
-  border: 1px solid var(--line, #e9e8e1);
+  border: 1px solid var(--pos-line);
   border-radius: 50%;
-  background: var(--white, #fff);
+  background: var(--pos-white);
   color: #61665d;
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.anvil-role-back-link > button:hover,
+.anvil-role-back-link > button:focus-visible {
+  border-color: var(--pos-accent);
+  color: var(--pos-accent);
 }
 
 .anvil-role-brand-logo {
   flex: 0 0 auto;
-  width: 30px;
-  height: 35px;
+  width: 31px;
+  height: 36px;
 }
 
 .anvil-role-brand-logo img {
@@ -703,28 +148,33 @@ input.anvil-role-cash-input:focus {
 .anvil-role-brand-copy {
   width: auto;
   min-width: 0;
-  padding: 0;
+  flex: 0 1 auto;
 }
 
-.anvil-role-brand-copy .anvil-panel-section-container {
+.anvil-role-brand-copy > .anvil-flow-panel-gutter {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
   width: auto;
   min-width: 0;
-  padding: 0;
 }
 
 .anvil-role-brand-name {
   overflow: hidden;
   font-size: 11px;
   font-weight: 700;
+  line-height: 1.2 !important;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .anvil-role-brand-meta {
   margin-top: 2px;
-  color: var(--muted, #85877f);
+  color: var(--pos-muted);
   font-size: 7px;
-  letter-spacing: .15em;
+  letter-spacing: .16em;
+  line-height: 1.2 !important;
 }
 
 .anvil-role-nav-link {
@@ -742,9 +192,43 @@ input.anvil-role-cash-input:focus {
   font-weight: 600;
 }
 
-.anvil-role-section-heading {
-  display: block !important;
+.anvil-role-nav-link > button:hover,
+.anvil-role-nav-link > button:focus-visible {
+  color: var(--pos-accent);
+}
+
+/* Register and catalog */
+
+.anvil-role-register-layout {
+  width: min(calc(100% - 56px), 1320px) !important;
+  margin: 0 auto !important;
+  padding: 31px 0 42px !important;
+}
+
+.anvil-role-register-layout .anvil-row {
+  margin-right: -8px;
+  margin-left: -8px;
+}
+
+.anvil-role-register-layout [class*="col-"] {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.anvil-role-menu-panel {
   width: 100%;
+  min-width: 0;
+}
+
+.anvil-role-menu-panel > .anvil-panel-section-container {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+.anvil-role-section-heading {
+  width: 100%;
+  margin: 0 0 18px;
 }
 
 .anvil-role-section-heading > .anvil-flow-panel-gutter {
@@ -752,121 +236,178 @@ input.anvil-role-cash-input:focus {
   width: 100%;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0;
+  gap: 20px;
 }
 
 .anvil-role-section-heading-copy {
-  width: auto;
   min-width: 0;
 }
 
-.anvil-role-section-heading-copy .anvil-panel-section-container {
-  width: auto;
-  padding: 0;
+.anvil-role-section-heading-copy > .anvil-flow-panel-gutter {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
 }
 
 .anvil-role-section-title {
   display: block;
-  max-width: 430px;
+  max-width: 420px;
   margin: 0;
   white-space: pre-line;
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(35px, 4vw, 48px);
+  font-size: clamp(36px, 4vw, 48px);
   font-weight: 500;
   letter-spacing: -.045em;
-  line-height: 1.08;
+  line-height: 1.03 !important;
 }
 
 .anvil-role-menu-count {
   flex: 0 0 auto;
-  padding-bottom: 4px;
-  color: var(--muted, #85877f);
-  font-size: 9px;
+  padding-bottom: 3px;
+  color: var(--pos-muted);
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: .12em;
+  letter-spacing: .14em;
 }
 
-.anvil-role-register-layout > .anvil-flow-panel-gutter {
-  padding-top: 31px;
+.anvil-role-product-grid {
+  width: 100%;
+  margin: 0;
 }
 
-.anvil-role-product-grid > .anvil-flow-panel-gutter {
-  margin-top: 18px;
+.anvil-role-product-grid .anvil-row {
+  margin-right: -7px;
+  margin-left: -7px;
+}
+
+.anvil-role-product-grid [class*="col-"] {
+  padding-right: 7px;
+  padding-bottom: 14px;
+  padding-left: 7px;
 }
 
 .anvil-role-product-card {
   position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--pos-line);
   border-radius: 5px;
+  background: var(--pos-white);
+  box-shadow: 0 1px 0 rgba(36, 40, 32, .02);
+  transition: transform .16s ease, box-shadow .16s ease;
 }
 
-.anvil-role-product-card .anvil-role-product-image {
-  height: 185px !important;
+.anvil-role-product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(42, 46, 32, .10);
 }
 
-.anvil-role-product-card .anvil-role-pos-button {
-  display: none;
+.anvil-role-product-card > .anvil-panel-section-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 0;
+}
+
+.anvil-role-product-image {
+  display: block;
+  width: 100%;
+  height: 185px;
+  overflow: hidden;
+  background: #eeede7;
+}
+
+.anvil-role-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.anvil-role-product-name {
+  display: block;
+  margin: 12px 12px 0;
+  padding-right: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.25 !important;
+}
+
+.anvil-role-product-description {
+  display: block;
+  min-height: 34px;
+  margin: 6px 12px 0;
+  color: var(--pos-muted);
+  font-size: 9px;
+  line-height: 1.45 !important;
+}
+
+.anvil-role-product-price {
+  display: block;
+  margin: 8px 12px 14px;
+  color: var(--pos-accent);
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .anvil-role-add-product-button {
   position: absolute;
-  right: 10px;
-  bottom: 11px;
-  z-index: 1;
-  width: 24px;
-  height: 24px;
+  right: 9px;
+  bottom: 10px;
+  z-index: 2;
+  width: 23px;
+  height: 23px;
   margin: 0;
 }
 
 .anvil-role-add-product-button > button {
   display: grid;
-  width: 24px;
-  height: 24px;
-  min-height: 24px;
+  width: 23px;
+  height: 23px;
+  min-height: 23px;
   place-items: center;
-  padding: 0;
+  padding: 0 0 1px;
   border: 0;
   border-radius: 50%;
-  background: var(--accent-pale, #e9f0e8);
-  color: var(--accent-dark, #31503a);
-  font-size: 17px;
+  background: var(--pos-accent-pale);
+  color: var(--pos-accent-dark);
+  font-size: 16px;
   line-height: 1;
 }
 
 .anvil-role-add-product-button > button:hover,
 .anvil-role-add-product-button > button:focus-visible {
-  background: var(--accent, #456b50);
-  color: #fff;
+  background: var(--pos-accent);
+  color: var(--pos-white);
 }
 
-.anvil-role-product-name {
-  margin-top: 13px;
-  font-size: 11px;
-}
-
-.anvil-role-product-description {
-  min-height: 35px;
-  margin-top: 6px;
-  font-size: 9px;
-  line-height: 1.45;
-}
-
-.anvil-role-product-price {
-  margin-top: 9px;
-  margin-bottom: 17px;
-  font-size: 11px;
-}
+/* Checkout rail */
 
 .anvil-role-basket-panel {
+  position: sticky;
+  top: 18px;
+  width: 100%;
   min-height: 420px;
-  max-height: calc(100vh - 100px);
-  padding: 0;
+  max-height: calc(100vh - 90px);
   overflow: hidden;
+  border: 1px solid var(--pos-line);
   border-radius: 6px;
+  background: var(--pos-white);
+}
+
+.anvil-role-basket-panel > .anvil-panel-section-container {
+  display: flex;
+  min-height: 420px;
+  max-height: calc(100vh - 90px);
+  flex-direction: column;
+  padding: 0;
 }
 
 .anvil-role-checkout-heading {
-  display: block !important;
   width: 100%;
+  border-bottom: 1px solid var(--pos-line);
 }
 
 .anvil-role-checkout-heading > .anvil-flow-panel-gutter {
@@ -874,20 +415,17 @@ input.anvil-role-cash-input:focus {
   width: 100%;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 17px 21px 16px;
-  border-bottom: 1px solid var(--line, #e9e8e1);
+  padding: 17px 16px 15px;
 }
 
-.anvil-role-checkout-heading-copy {
-  width: auto;
+.anvil-role-checkout-heading-copy > .anvil-flow-panel-gutter {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
 }
 
-.anvil-role-checkout-heading-copy .anvil-panel-section-container {
-  width: auto;
-  padding: 0;
-}
-
-.anvil-role-checkout-heading-copy .anvil-role-pos-eyebrow {
+.anvil-role-checkout-heading .anvil-role-pos-eyebrow {
   margin-bottom: 5px;
 }
 
@@ -895,57 +433,65 @@ input.anvil-role-cash-input:focus {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 18px;
   font-weight: 500;
+  line-height: 1.1 !important;
 }
 
-.anvil-role-checkout-heading .anvil-role-pos-quiet-button {
+.anvil-role-pos-quiet-button {
   margin: 0;
 }
 
-.anvil-role-checkout-heading .anvil-role-pos-quiet-button > button {
+.anvil-role-pos-quiet-button > button {
   min-height: 22px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: var(--pos-muted);
   font-size: 9px;
+}
+
+.anvil-role-pos-quiet-button > button:hover,
+.anvil-role-pos-quiet-button > button:focus-visible {
+  color: var(--pos-accent);
 }
 
 .anvil-role-basket-items {
   flex: 1 1 auto;
   min-height: 125px;
   overflow: auto;
-  padding: 0 21px;
 }
 
-.anvil-role-basket-items .anvil-panel-section-container {
-  padding: 0;
+.anvil-role-basket-items > .anvil-panel-section-container {
+  padding: 0 16px;
 }
 
 .anvil-role-basket-empty {
   display: block;
   min-height: 125px;
   margin: 0;
-  padding: 35px 0 20px;
+  padding: 34px 0 20px;
   white-space: pre-line;
-  color: var(--muted, #85877f);
+  color: #989a92;
   font-size: 10px;
-  line-height: 1.8;
+  line-height: 1.8 !important;
   text-align: center;
 }
 
 .anvil-role-basket-row {
-  display: block !important;
   width: 100%;
-  padding: 16px 0;
   border-bottom: 1px solid #f0efe9;
 }
 
 .anvil-role-basket-row > .anvil-flow-panel-gutter {
   display: grid !important;
-  grid-template-columns: 54px minmax(0, 1fr) auto;
-  gap: 11px;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  gap: 9px;
   align-items: start;
+  padding: 13px 0;
 }
 
 .anvil-role-basket-image {
-  width: 54px;
-  height: 58px;
+  width: 48px;
+  height: 52px;
   border-radius: 4px;
   background: #f1f0eb;
 }
@@ -957,31 +503,30 @@ input.anvil-role-cash-input:focus {
 }
 
 .anvil-role-basket-line-info {
-  width: auto;
   min-width: 0;
 }
 
-.anvil-role-basket-line-info .anvil-panel-section-container {
-  width: auto;
+.anvil-role-basket-line-info > .anvil-panel-section-container {
   padding: 0;
 }
 
 .anvil-role-basket-item-name {
+  display: block;
   overflow: hidden;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .anvil-role-basket-unit-price {
-  margin-top: 4px;
-  color: var(--muted, #85877f);
-  font-size: 10px;
+  display: block;
+  margin-top: 3px;
+  color: var(--pos-muted);
+  font-size: 9px;
 }
 
 .anvil-role-quantity-control {
-  display: block !important;
   width: max-content;
   margin-top: 4px;
 }
@@ -990,26 +535,52 @@ input.anvil-role-cash-input:focus {
   display: flex !important;
   width: max-content;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+.anvil-role-quantity-button > button {
+  display: grid;
+  width: 21px;
+  height: 21px;
+  min-height: 21px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--pos-line);
+  border-radius: 4px;
+  background: var(--pos-white);
+  color: var(--pos-ink);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.anvil-role-quantity-button > button:hover,
+.anvil-role-quantity-button > button:focus-visible {
+  border-color: var(--pos-accent);
+  color: var(--pos-accent);
+}
+
+.anvil-role-quantity-label {
+  min-width: 10px;
+  font-size: 10px;
+  text-align: center;
 }
 
 .anvil-role-basket-line-total {
-  padding-top: 2px;
-  font-size: 11px;
+  padding-top: 1px;
+  font-size: 10px;
+  font-weight: 700;
 }
 
 .anvil-role-checkout-bottom {
   flex: 0 0 auto;
-  border-top: 1px solid var(--line, #e9e8e1);
-  padding: 15px 21px 16px;
+  border-top: 1px solid var(--pos-line);
 }
 
-.anvil-role-checkout-bottom .anvil-panel-section-container {
-  padding: 0;
+.anvil-role-checkout-bottom > .anvil-panel-section-container {
+  padding: 14px 16px 15px;
 }
 
 .anvil-role-subtotal {
-  display: block !important;
   width: 100%;
   margin-bottom: 15px;
 }
@@ -1029,12 +600,15 @@ input.anvil-role-cash-input:focus {
   font-weight: 700;
 }
 
-.anvil-role-checkout-bottom > .anvil-role-field-label {
+.anvil-role-field-label {
+  display: block;
   margin: 0 0 6px;
+  color: #63675e;
+  font-size: 9px;
+  font-weight: 600;
 }
 
 .anvil-role-payment-options {
-  display: block !important;
   width: 100%;
   margin: 0 0 14px;
 }
@@ -1042,42 +616,40 @@ input.anvil-role-cash-input:focus {
 .anvil-role-payment-options > .anvil-flow-panel-gutter {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 7px;
 }
 
-.anvil-role-payment-options .anvil-radio {
+.anvil-role-payment-option {
   margin: 0;
 }
 
-.anvil-role-payment-options .anvil-radio label {
+.anvil-role-payment-option label {
   display: block;
   margin: 0;
   padding: 8px;
-  border: 1px solid var(--line, #e9e8e1);
+  border: 1px solid var(--pos-line);
   border-radius: 4px;
   color: #6b6d66;
-  font-size: 10px;
+  font-size: 9px;
   text-align: center;
 }
 
-.anvil-role-payment-options .anvil-radio input {
+.anvil-role-payment-option input {
   position: absolute;
   opacity: 0;
 }
 
-.anvil-role-payment-options .anvil-radio input:checked + label {
-  border-color: var(--accent, #456b50);
-  background: var(--accent-pale, #e9f0e8);
-  color: var(--accent-dark, #31503a);
+.anvil-role-payment-option input:checked + label {
+  border-color: var(--pos-accent);
+  background: var(--pos-accent-pale);
+  color: var(--pos-accent-dark);
   font-weight: 700;
 }
 
 .anvil-role-cash-input-wrap {
-  display: block !important;
   width: 100%;
-  height: 39px;
-  padding: 0 10px;
-  border: 1px solid var(--line, #e9e8e1);
+  height: 36px;
+  border: 1px solid var(--pos-line);
   border-radius: 4px;
 }
 
@@ -1086,35 +658,43 @@ input.anvil-role-cash-input:focus {
   height: 100%;
   align-items: center;
   gap: 7px;
+  padding: 0 9px;
 }
 
 .anvil-role-currency-prefix {
   color: #73766e;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 input.anvil-role-cash-input {
-  height: 32px;
+  width: 100%;
+  height: 30px;
   padding: 0;
   border: 0;
-  font-size: 12px;
+  outline: 0;
+  color: var(--pos-ink);
+  font-size: 10px;
+}
+
+.anvil-role-cash-input-wrap:focus-within {
+  border-color: var(--pos-accent);
 }
 
 .anvil-role-change-message {
-  margin: 6px 0 2px;
-  font-size: 9px;
+  min-height: 15px;
+  margin: 5px 0 2px;
+  color: #898b83;
+  font-size: 8px;
 }
 
 .anvil-role-checkout-button {
-  display: block !important;
   width: 100%;
-  margin-top: 8px;
+  margin-top: 7px;
 }
 
 .anvil-role-checkout-button > .anvil-flow-panel-gutter {
   display: flex !important;
   align-items: center;
-  justify-content: space-between;
 }
 
 .anvil-role-charge-action {
@@ -1124,15 +704,20 @@ input.anvil-role-cash-input {
 
 .anvil-role-charge-action > button {
   width: 100%;
-  min-height: 42px;
-  padding: 0 15px;
+  min-height: 40px;
+  padding: 0 13px;
   border: 0;
   border-radius: 4px;
-  background: var(--accent, #456b50);
-  color: #fff;
-  font-size: 11px;
+  background: var(--pos-accent);
+  color: var(--pos-white);
+  font-size: 10px;
   font-weight: 700;
   text-align: left;
+}
+
+.anvil-role-charge-action > button:hover:not(:disabled),
+.anvil-role-charge-action > button:focus-visible {
+  background: var(--pos-accent-dark);
 }
 
 .anvil-role-charge-action > button:disabled {
@@ -1141,383 +726,204 @@ input.anvil-role-cash-input {
 }
 
 .anvil-role-charge-total {
-  margin-left: -43px;
   z-index: 1;
-  color: #fff;
-  font-size: 11px;
+  margin-left: -40px;
+  color: var(--pos-white);
+  font-size: 10px;
   font-weight: 700;
   pointer-events: none;
 }
 
 .anvil-role-secure-note {
-  margin-top: 8px;
+  margin-top: 7px;
   color: #a0a198;
-  font-size: 8px;
+  font-size: 7px;
   text-align: center;
 }
 
-@media (max-width: 740px) {
-  .anvil-role-register-layout > .anvil-flow-panel-gutter {
-    padding-top: 25px;
-  }
+/* Picker, history and receipt use the same visual language. */
 
-  .anvil-role-section-title {
-    font-size: 38px;
-  }
+.anvil-role-pos-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 500;
+  letter-spacing: -.045em;
+  line-height: 1.02 !important;
 }
 
-/* FlowPanel compatibility: support the gutter nesting emitted by both
-   accelerated and classic Anvil client renderers. */
-
-.anvil-role-register-layout > .anvil-flow-panel-item > .anvil-flow-panel-gutter,
-.anvil-role-register-layout > .anvil-flow-panel-gutter {
-  display: grid !important;
-  width: min(100% - 56px, 1320px);
-  grid-template-columns: minmax(0, 1fr) 370px;
-  gap: 36px;
-  margin: 0 auto;
-  padding: 31px 0 0;
-  align-items: start;
+.anvil-role-pos-subtitle {
+  max-width: 440px;
+  margin: 17px 0 0;
+  color: var(--pos-muted);
+  line-height: 1.7 !important;
 }
 
-.anvil-role-product-grid > .anvil-flow-panel-item > .anvil-flow-panel-gutter,
-.anvil-role-product-grid > .anvil-flow-panel-gutter {
-  display: grid !important;
+.anvil-role-shop-choices {
   width: 100%;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 15px;
-  margin-top: 18px;
+  margin-top: 34px;
 }
 
-.anvil-role-shop-choices > .anvil-flow-panel-item > .anvil-flow-panel-gutter,
 .anvil-role-shop-choices > .anvil-flow-panel-gutter {
   display: grid !important;
-  width: 100%;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
 }
 
-.anvil-role-brand-copy > .anvil-flow-panel-gutter,
-.anvil-role-section-heading-copy > .anvil-flow-panel-gutter,
-.anvil-role-checkout-heading-copy > .anvil-flow-panel-gutter {
+.anvil-role-shop-card {
   display: flex !important;
+  min-height: 220px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0;
-}
-
-.anvil-role-brand-copy > .anvil-flow-panel-gutter {
-  width: auto;
-  min-width: 0;
-}
-
-.anvil-role-brand-copy .anvil-flow-panel-item,
-.anvil-role-section-heading-copy .anvil-flow-panel-item,
-.anvil-role-checkout-heading-copy .anvil-flow-panel-item {
-  width: auto;
-  min-width: 0;
-}
-
-@media (max-width: 1050px) {
-  .anvil-role-register-layout > .anvil-flow-panel-item > .anvil-flow-panel-gutter,
-  .anvil-role-register-layout > .anvil-flow-panel-gutter {
-    grid-template-columns: minmax(0, 1fr) 330px;
-    gap: 22px;
-  }
-
-  .anvil-role-product-grid > .anvil-flow-panel-item > .anvil-flow-panel-gutter,
-  .anvil-role-product-grid > .anvil-flow-panel-gutter {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 740px) {
-  .anvil-role-register-layout > .anvil-flow-panel-item > .anvil-flow-panel-gutter,
-  .anvil-role-register-layout > .anvil-flow-panel-gutter {
-    width: min(100% - 32px, 540px);
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding-top: 25px;
-  }
-}
-
-@media (max-width: 390px) {
-  .anvil-role-shop-choices > .anvil-flow-panel-item > .anvil-flow-panel-gutter,
-  .anvil-role-shop-choices > .anvil-flow-panel-gutter,
-  .anvil-role-product-grid > .anvil-flow-panel-item > .anvil-flow-panel-gutter,
-  .anvil-role-product-grid > .anvil-flow-panel-gutter {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Layout boxes: Anvil puts FlowPanel children inside a gutter and item
-   wrapper. Let the component root own the grid/flex layout so the POS keeps
-   the same composition in each supported client renderer. */
-
-.anvil-role-pos-header,
-.anvil-role-register-layout,
-.anvil-role-product-grid,
-.anvil-role-section-heading,
-.anvil-role-brand-copy,
-.anvil-role-checkout-heading,
-.anvil-role-checkout-heading-copy,
-.anvil-role-basket-row,
-.anvil-role-quantity-control,
-.anvil-role-subtotal,
-.anvil-role-payment-options,
-.anvil-role-cash-input-wrap,
-.anvil-role-checkout-button {
-  min-width: 0;
-}
-
-.anvil-role-pos-header {
-  display: flex !important;
-  min-height: 54px;
-  align-items: center;
-  gap: 11px;
-  padding: 0 max(28px, calc((100vw - 1360px) / 2));
-}
-
-.anvil-role-pos-header > .anvil-flow-panel-gutter,
-.anvil-role-brand-copy > .anvil-flow-panel-gutter,
-.anvil-role-section-heading > .anvil-flow-panel-gutter,
-.anvil-role-checkout-heading > .anvil-flow-panel-gutter,
-.anvil-role-checkout-heading-copy > .anvil-flow-panel-gutter,
-.anvil-role-basket-row > .anvil-flow-panel-gutter,
-.anvil-role-quantity-control > .anvil-flow-panel-gutter,
-.anvil-role-subtotal > .anvil-flow-panel-gutter,
-.anvil-role-payment-options > .anvil-flow-panel-gutter,
-.anvil-role-cash-input-wrap > .anvil-flow-panel-gutter,
-.anvil-role-checkout-button > .anvil-flow-panel-gutter {
-  display: contents !important;
-}
-
-/* Some Anvil runtimes add one extra FlowPanel wrapper. Keep the same rule
-   effective when the gutter is below that wrapper. */
-.anvil-role-pos-header .anvil-flow-panel-gutter,
-.anvil-role-register-layout .anvil-flow-panel-gutter,
-.anvil-role-product-grid .anvil-flow-panel-gutter,
-.anvil-role-section-heading .anvil-flow-panel-gutter,
-.anvil-role-brand-copy .anvil-flow-panel-gutter,
-.anvil-role-checkout-heading .anvil-flow-panel-gutter,
-.anvil-role-checkout-heading-copy .anvil-flow-panel-gutter,
-.anvil-role-basket-row .anvil-flow-panel-gutter,
-.anvil-role-quantity-control .anvil-flow-panel-gutter,
-.anvil-role-subtotal .anvil-flow-panel-gutter,
-.anvil-role-payment-options .anvil-flow-panel-gutter,
-.anvil-role-cash-input-wrap .anvil-flow-panel-gutter,
-.anvil-role-checkout-button .anvil-flow-panel-gutter {
-  display: contents !important;
-}
-
-.anvil-role-pos-header > .anvil-flow-panel-item,
-.anvil-role-brand-copy > .anvil-flow-panel-item,
-.anvil-role-section-heading > .anvil-flow-panel-item,
-.anvil-role-checkout-heading > .anvil-flow-panel-item,
-.anvil-role-checkout-heading-copy > .anvil-flow-panel-item,
-.anvil-role-basket-row > .anvil-flow-panel-item,
-.anvil-role-quantity-control > .anvil-flow-panel-item,
-.anvil-role-subtotal > .anvil-flow-panel-item,
-.anvil-role-payment-options > .anvil-flow-panel-item,
-.anvil-role-cash-input-wrap > .anvil-flow-panel-item,
-.anvil-role-checkout-button > .anvil-flow-panel-item {
-  min-width: 0;
-}
-
-.anvil-role-brand-copy,
-.anvil-role-section-heading-copy,
-.anvil-role-checkout-heading-copy {
-  display: flex !important;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-}
-
-.anvil-role-brand-copy {
-  width: auto;
-  flex: 0 1 auto;
-}
-
-.anvil-role-section-heading-copy,
-.anvil-role-checkout-heading-copy {
-  width: auto;
-}
-
-.anvil-role-section-heading,
-.anvil-role-checkout-heading {
-  display: flex !important;
-  width: 100%;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-
-.anvil-role-basket-row {
-  display: grid !important;
-  width: 100%;
-  grid-template-columns: 54px minmax(0, 1fr) auto;
-  gap: 11px;
-  align-items: start;
-}
-
-.anvil-role-quantity-control {
-  display: flex !important;
-  width: max-content;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.anvil-role-subtotal {
-  display: flex !important;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.anvil-role-payment-options {
-  display: grid !important;
-  width: 100%;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.anvil-role-cash-input-wrap {
-  display: flex !important;
-  width: 100%;
-  height: 39px;
-  align-items: center;
-  gap: 7px;
-}
-
-.anvil-role-checkout-button {
-  display: flex !important;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.anvil-role-nav-link {
-  margin-left: auto;
-}
-
-.anvil-role-register-layout {
-  display: grid !important;
-  width: min(calc(100% - 56px), 1320px);
-  grid-template-columns: minmax(0, 1fr) 370px;
-  gap: 36px;
-  margin: 0 auto;
-  padding: 31px 0 42px;
-  align-items: start;
-}
-
-.anvil-role-register-layout > .anvil-flow-panel-gutter {
-  display: contents !important;
-}
-
-.anvil-role-register-layout > .anvil-flow-panel-item {
-  min-width: 0;
-}
-
-.anvil-role-menu-panel,
-.anvil-role-menu-panel > .anvil-panel-section-container {
-  width: 100% !important;
-  min-width: 0;
-  max-width: none !important;
-  padding-right: 0;
-  padding-left: 0;
-}
-
-.anvil-role-product-grid {
-  display: grid !important;
-  width: 100%;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 15px;
-  margin-top: 18px;
-}
-
-.anvil-role-product-grid > .anvil-flow-panel-gutter {
-  display: contents !important;
-}
-
-.anvil-role-product-grid > .anvil-flow-panel-item {
-  min-width: 0;
-}
-
-.anvil-role-product-card,
-.anvil-role-product-card > .anvil-panel-section-container {
-  min-width: 0;
-}
-
-.anvil-role-product-card > .anvil-panel-section-container {
-  display: flex !important;
-  height: 100%;
-  flex-direction: column;
-  padding: 0;
-}
-
-.anvil-role-basket-panel {
-  display: block !important;
-  min-height: 420px;
-  max-height: calc(100vh - 100px);
-  padding: 0;
+  justify-content: flex-end;
   overflow: hidden;
+  padding: 25px;
+  border: 1px solid var(--pos-line);
+  border-radius: 6px;
+  background: var(--pos-white);
 }
 
-.anvil-role-basket-panel > .anvil-panel-section-container {
+.anvil-role-shop-card .anvil-image {
+  width: 88px;
+  height: 76px;
+  margin-bottom: 20px;
+}
+
+.anvil-role-shop-card .anvil-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.anvil-role-shop-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 21px;
+}
+
+.anvil-role-pos-button > button {
+  width: 100%;
+  min-height: 40px;
+  margin-top: 12px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--pos-accent);
+  color: var(--pos-white);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.anvil-role-analytics-summary > .anvil-flow-panel-gutter {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 35px 0 26px;
+}
+
+.anvil-role-metric-card {
+  min-height: 130px;
+  padding: 19px;
+  border: 1px solid var(--pos-line);
+  border-radius: 5px;
+  background: var(--pos-white);
+}
+
+.anvil-role-metric-value {
+  display: block;
+  margin-top: 8px;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.anvil-role-history-row > .anvil-flow-panel-gutter {
   display: flex !important;
-  min-height: 420px;
-  max-height: calc(100vh - 100px);
-  flex-direction: column;
-  padding: 0;
+  min-height: 64px;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0efe9;
 }
 
-.anvil-role-basket-items {
+.anvil-role-history-detail {
   flex: 1 1 auto;
-  min-height: 125px;
+  min-width: 0;
+  color: var(--pos-muted);
+  font-size: 10px;
 }
 
-.anvil-role-checkout-bottom {
-  flex: 0 0 auto;
+.anvil-role-receipt {
+  min-width: 320px;
+  padding: 30px 28px;
+  background: var(--pos-white);
 }
 
-@media (max-width: 1050px) {
-  .anvil-role-register-layout {
-    grid-template-columns: minmax(0, 1fr) 330px;
-    gap: 22px;
-  }
+.anvil-role-receipt-title {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  text-align: center;
+}
 
-  .anvil-role-product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.anvil-role-receipt-line,
+.anvil-role-receipt-footer {
+  color: #777;
+  font-size: 10px;
+}
+
+.anvil-role-receipt-total {
+  margin: 18px 0;
+  border-top: 1px dashed #d9d9d3;
+  border-bottom: 1px dashed #d9d9d3;
+  padding: 13px 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.anvil-modal-content {
+  border-radius: 6px;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .20);
 }
 
 @media (max-width: 740px) {
-  .anvil-role-pos-header {
-    min-height: 64px;
+  .anvil-role-pos-header > .anvil-flow-panel-gutter {
     padding: 0 16px;
   }
 
   .anvil-role-register-layout {
-    width: min(calc(100% - 32px), 540px);
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding-top: 25px;
+    width: min(calc(100% - 32px), 560px) !important;
+    padding-top: 25px !important;
   }
 
-  .anvil-role-product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .anvil-role-basket-panel,
-  .anvil-role-basket-panel > .anvil-panel-section-container {
-    min-height: 440px;
+  .anvil-role-basket-panel {
+    position: static;
     max-height: none;
+  }
+
+  .anvil-role-basket-panel > .anvil-panel-section-container {
+    max-height: none;
+  }
+
+  .anvil-role-product-image {
+    height: 165px;
+  }
+
+  .anvil-role-analytics-summary > .anvil-flow-panel-gutter {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 390px) {
-  .anvil-role-product-grid {
+@media (max-width: 430px) {
+  .anvil-role-section-title {
+    font-size: 35px;
+  }
+
+  .anvil-role-product-image {
+    height: 145px;
+  }
+
+  .anvil-role-shop-choices > .anvil-flow-panel-gutter {
     grid-template-columns: 1fr;
   }
 }
