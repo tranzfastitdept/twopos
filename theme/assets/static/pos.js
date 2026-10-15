@@ -105,7 +105,10 @@
   async function loadProducts() {
     const response = await fetch(`/${slug}/api/products`);
     if (!response.ok) throw new Error("Could not load this shop's menu.");
-    products = await response.json();
+    products = (await response.json()).map((product) => ({
+      ...product,
+      id: product.id ?? product.product_id,
+    }));
     document.getElementById("product-count").textContent = `${products.length} ITEMS`;
     const grid = document.getElementById("catalog-grid");
     for (const product of products) {

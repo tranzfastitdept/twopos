@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ shop.name }} | Register</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v='3') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v='4') }}">
 </head>
 <body class="pos-page" data-shop="{{ shop.slug }}" data-name="{{ shop.name }}" data-receipt-header="{{ shop.receipt_header }}">
   <header class="topbar">
@@ -20,7 +20,7 @@
   <main class="register-layout">
     <section class="catalog">
       <div class="section-heading">
-        <div><p class="eyebrow">YOUR MENU</p><h1>Good things,<br>made to order.</h1><p class="menu-hint">Tap any product card to add it to the basket.</p></div>
+        <div><p class="eyebrow">YOUR MENU</p><h1>Good things,<br>made to order.</h1></div>
         <span class="menu-count" id="product-count"></span>
       </div>
       <div id="catalog-grid" class="product-grid" aria-live="polite"></div>
@@ -49,6 +49,6 @@
   </main>
   <div id="receipt-overlay" class="receipt-overlay" hidden></div>
   <script src="{{ url_for('static', filename='interaction-lock.js', v='1') }}" defer></script>
-  <script src="{{ url_for('static', filename='pos.js', v='4') }}" defer></script>
+  <script src="{{ url_for('static', filename='pos.js', v='5') }}" defer></script>
 </body>
 </html>
