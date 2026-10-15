@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>{{ shop.name }} | Sales &amp; history</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v='2') }}">
+</head>
+<body class="analytics-page" data-shop="{{ shop.slug }}" data-name="{{ shop.name }}" data-receipt-header="{{ shop.receipt_header }}">
+  <header class="topbar">
+    <a href="/{{ shop.slug }}/" class="back-link" aria-label="Back to register">←</a>
+    <a class="brand" href="/{{ shop.slug }}/">
+      <img src="/assets/{{ shop.slug }}/{{ shop.logo }}" alt="">
+      <span>{{ shop.name }}<small>SALES &amp; HISTORY</small></span>
+    </a>
+    <a class="nav-link" href="/{{ shop.slug }}/">Back to register <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="analytics-shell">
+    <div class="analytics-title"><div><p class="eyebrow">BACK OFFICE</p><h1>Sales at a glance.</h1><p>Transaction history for this register only.</p></div></div>
+    <section class="metric-grid" aria-label="Sales summary">
+      <article class="metric-card metric-primary"><span>Gross sales</span><strong id="gross-sales">₱0.00</strong><small>All recorded orders</small></article>
+      <article class="metric-card"><span>Orders</span><strong id="order-count">0</strong><small>Completed checkouts</small></article>
+      <article class="metric-card"><span>Cash sales</span><strong id="cash-sales">₱0.00</strong><small>Paid with cash</small></article>
+      <article class="metric-card"><span>Digital sales</span><strong id="digital-sales">₱0.00</strong><small>Paid digitally</small></article>
+    </section>
+    <section class="history-section">
+      <div class="history-heading"><div><p class="eyebrow">REGISTER LOG</p><h2>Recent transactions</h2></div><span id="history-count" class="history-count"></span></div>
+      <div id="transactions-list" class="transactions-list"></div>
+    </section>
+  </main>
+  <div id="receipt-overlay" class="receipt-overlay" hidden></div>
+  <script src="{{ url_for('static', filename='interaction-lock.js', v='1') }}" defer></script>
+  <script src="{{ url_for('static', filename='analytics.js', v='3') }}" defer></script>
+</body>
+</html>

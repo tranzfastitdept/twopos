@@ -1,0 +1,7 @@
+id,name,description,price,image
+white-con-leche,White Con Leche,"Espresso and creamy milk, perfectly balanced with a touch of sweetness and cinnamon.",160.00,thumbs/white-con-leche.webp
+dark-con-leche,Dark Con Leche,"Bold espresso blended with creamy milk for a rich, intense, and mocha flavor.",160.00,thumbs/dark-con-leche.webp
+seasalt-matcha,Seasalt Matcha,Vibrant matcha balanced with a touch of sea salt.,210.00,thumbs/seasalt-matcha.webp
+lavender-matcha,Lavender Matcha,"A delicate blend of matcha and floral lavender — smooth, calming, and lightly sweet in every sip.",190.00,thumbs/lavender-matcha.webp
+dulce-con-leche,Dulce Con Leche,"Rich espresso, creamy milk, and buttery toffee sweetness in every sip.",160.00,thumbs/dulce-con-leche.webp
+cafe-latte,Cafe Latte,Smooth espresso and creamy milk.,160.00,thumbs/cafe-latte.webp

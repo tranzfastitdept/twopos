@@ -1,0 +1,26 @@
+WORKSTATION SPECIALTY COFFEE
+MENU
+
+1. WHITE CON LECHE — ₱160.00
+   Description:
+   Espresso and creamy milk, perfectly balanced with a touch of sweetness and cinnamon.
+
+2. DARK CON LECHE — ₱160.00
+   Description:
+   Bold espresso blended with creamy milk for a rich, intense, and mocha flavor.
+
+3. SEASALT MATCHA — ₱210.00
+   Description:
+   Vibrant matcha balanced with a touch of sea salt.
+
+4. LAVENDER MATCHA — ₱190.00
+   Description:
+   A delicate blend of matcha and floral lavender — smooth, calming, and lightly sweet in every sip.
+
+5. DULCE CON LECHE — ₱160.00
+   Description:
+   Rich espresso, creamy milk, and buttery toffee sweetness in every sip.
+
+6. CAFE LATTE — ₱160.00
+   Description:
+   Smooth espresso and creamy milk.
