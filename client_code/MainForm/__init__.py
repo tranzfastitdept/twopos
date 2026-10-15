@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from ._anvil_designer import MainFormTemplate
 
 import anvil
@@ -134,7 +135,7 @@ class MainForm(MainFormTemplate):
         if not all(character in "0123456789." for character in text):
             return 0
         amount = float(text)
-        return amount if math.isfinite(amount) else 0
+        return amount if not math.isnan(amount) and not math.isinf(amount) else 0
 
     def render_basket(self):
         self.basket_panel.clear()
@@ -156,7 +157,10 @@ class MainForm(MainFormTemplate):
             if not quantity:
                 continue
             row = FlowPanel(role="basket-row")
-            row.add_component(Label(text=f"{quantity} × {product['name']}", role="basket-item-name"))
+            row.add_component(Label(
+                text="{} × {}".format(quantity, product["name"]),
+                role="basket-item-name",
+            ))
             row.add_component(Label(text=self.format_money(product["price"] * quantity), role="basket-line-total"))
             decrease = Button(text="−", role="quantity-button")
             decrease.set_event_handler(
@@ -173,7 +177,10 @@ class MainForm(MainFormTemplate):
             row.add_component(increase)
             self.basket_panel.add_component(row)
 
-        self.basket_total_label = Label(text=f"Subtotal   {self.format_money(total)}", role="basket-total")
+        self.basket_total_label = Label(
+            text="Subtotal   {}".format(self.format_money(total)),
+            role="basket-total",
+        )
         self.basket_panel.add_component(self.basket_total_label)
         payment_options = FlowPanel(role="payment-options")
         cash = RadioButton(text="Cash", group_name="payment-method", selected=self.payment_method == "Cash")
@@ -197,15 +204,18 @@ class MainForm(MainFormTemplate):
             self.basket_panel.add_component(self.cash_input)
             paid = round(self.parse_cash_amount(self.cash_received), 2)
             if paid < total:
-                change_text = f"Short by {self.format_money(total - paid)}." if paid else "Enter the amount received."
+                change_text = "Short by {}.".format(self.format_money(total - paid)) if paid else "Enter the amount received."
             else:
-                change_text = f"Change due: {self.format_money(paid - total)}"
+                change_text = "Change due: {}".format(self.format_money(paid - total))
             self.change_label = Label(text=change_text, role="change-message")
             self.basket_panel.add_component(self.change_label)
         else:
             self.change_label = None
 
-        self.checkout_button = Button(text=f"Charge {self.format_money(total)}", role="pos-button")
+        self.checkout_button = Button(
+            text="Charge {}".format(self.format_money(total)),
+            role="pos-button",
+        )
         self.checkout_button.enabled = bool(self.cart) and (self.payment_method == "Digital" or paid >= total)
         self.checkout_button.set_event_handler("click", self.checkout)
         self.basket_panel.add_component(self.checkout_button)
@@ -225,16 +235,16 @@ class MainForm(MainFormTemplate):
 
     def update_checkout_state(self):
         total = self.basket_total()
-        self.basket_total_label.text = f"Subtotal   {self.format_money(total)}"
-        self.checkout_button.text = f"Charge {self.format_money(total)}"
+        self.basket_total_label.text = "Subtotal   {}".format(self.format_money(total))
+        self.checkout_button.text = "Charge {}".format(self.format_money(total))
         paid = round(self.parse_cash_amount(self.cash_received), 2)
         if self.change_label is not None:
             if paid <= 0:
                 self.change_label.text = "Enter the amount received."
             elif paid < total:
-                self.change_label.text = f"Short by {self.format_money(total - paid)}."
+                self.change_label.text = "Short by {}.".format(self.format_money(total - paid))
             else:
-                self.change_label.text = f"Change due: {self.format_money(paid - total)}"
+                self.change_label.text = "Change due: {}".format(self.format_money(paid - total))
         self.checkout_button.enabled = bool(self.cart) and (
             self.payment_method == "Digital" or paid >= total
         )
@@ -276,10 +286,17 @@ class MainForm(MainFormTemplate):
             summary.add_component(card)
         self.root.add_component(Label(text="Recent transactions", role="basket-title"))
         for order in data["transactions"]:
-            names = ", ".join(f"{item['quantity']} × {item['name']}" for item in order["items"])
+            names = ", ".join(
+                "{} × {}".format(item["quantity"], item["name"])
+                for item in order["items"]
+            )
             row = FlowPanel(role="history-row")
             details = Label(
-                text=f"{names} · {order['timestamp'].strftime('%Y-%m-%d %H:%M')} · {order['payment_method']}",
+                text="{} · {} · {}".format(
+                    names,
+                    order["timestamp"].strftime("%Y-%m-%d %H:%M"),
+                    order["payment_method"],
+                ),
                 role="history-detail",
             )
             row.add_component(details)
@@ -304,21 +321,28 @@ class MainForm(MainFormTemplate):
         ))
         for item in order["items"]:
             receipt.add_component(Label(
-                text=f"{item['quantity']} × {item['name']}   {self.format_money(item['line_total'])}",
+                text="{} × {}   {}".format(
+                    item["quantity"],
+                    item["name"],
+                    self.format_money(item["line_total"]),
+                ),
                 role="receipt-line",
             ))
         receipt.add_component(Label(
-            text=f"TOTAL   {self.format_money(order['total_amount'])}",
+            text="TOTAL   {}".format(self.format_money(order["total_amount"])),
             role="receipt-total",
         ))
-        receipt.add_component(Label(text=f"Payment: {order['payment_method']}", role="receipt-line"))
+        receipt.add_component(Label(
+            text="Payment: {}".format(order["payment_method"]),
+            role="receipt-line",
+        ))
         if order["payment_method"] == "Cash":
             receipt.add_component(Label(
-                text=f"Paid: {self.format_money(order['amount_paid'])}",
+                text="Paid: {}".format(self.format_money(order["amount_paid"])),
                 role="receipt-line",
             ))
             receipt.add_component(Label(
-                text=f"Change: {self.format_money(order['change_given'])}",
+                text="Change: {}".format(self.format_money(order["change_given"])),
                 role="receipt-line",
             ))
         receipt.add_component(Label(text=self.current_shop["receipt_header"], role="receipt-footer"))
@@ -333,4 +357,4 @@ class MainForm(MainFormTemplate):
 
     @staticmethod
     def format_money(value):
-        return f"₱{float(value):,.2f}"
+        return "₱{:,.2f}".format(float(value))

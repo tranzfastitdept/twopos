@@ -7,6 +7,11 @@ from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 
 from .catalog import PRODUCTS, SHOPS
 
+try:
+    string_types = (basestring,)
+except NameError:
+    string_types = (str,)
+
 
 def _default_shop():
     setting = app_tables.app_settings.get(key="default_shop")
@@ -15,13 +20,13 @@ def _default_shop():
     slug = setting["value"]
     if not slug:
         return None
-    if not isinstance(slug, str) or slug not in PRODUCTS:
+    if not isinstance(slug, string_types) or slug not in PRODUCTS:
         raise ValueError("Set app_settings.default_shop to a configured shop slug or leave it blank.")
     return slug
 
 
 def _shop_row(slug):
-    if not isinstance(slug, str) or slug not in PRODUCTS:
+    if not isinstance(slug, string_types) or slug not in PRODUCTS:
         raise ValueError("Unknown register.")
     default = _default_shop()
     if default is not None and slug != default:
@@ -36,9 +41,9 @@ def _decimal(value, label):
     try:
         amount = Decimal(str(value))
     except (InvalidOperation, ValueError, TypeError):
-        raise ValueError(f"{label} must be a valid amount.")
+        raise ValueError("{} must be a valid amount.".format(label))
     if not amount.is_finite() or amount < 0:
-        raise ValueError(f"{label} must be a non-negative amount.")
+        raise ValueError("{} must be a non-negative amount.".format(label))
     return amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
@@ -119,7 +124,7 @@ def submit_transaction(shop_slug, items, method, amount_paid):
             raise ValueError("Invalid item in basket.")
         product_id = item.get("product_id")
         quantity = item.get("quantity")
-        if not isinstance(product_id, str) or product_id not in allowed_ids:
+        if not isinstance(product_id, string_types) or product_id not in allowed_ids:
             raise ValueError("This product is not part of this register.")
         if isinstance(quantity, bool) or not isinstance(quantity, int) or not 1 <= quantity <= 99:
             raise ValueError("Product quantities must be between 1 and 99.")
@@ -186,9 +191,9 @@ def get_shop_analytics(shop_slug):
     )
     return {
         "order_count": len(transactions),
-        "gross_sales": f"₱{_number(cash_sales + digital_sales):,.2f}",
-        "cash_sales": f"₱{_number(cash_sales):,.2f}",
-        "digital_sales": f"₱{_number(digital_sales):,.2f}",
+        "gross_sales": u"₱{:,.2f}".format(_number(cash_sales + digital_sales)),
+        "cash_sales": u"₱{:,.2f}".format(_number(cash_sales)),
+        "digital_sales": u"₱{:,.2f}".format(_number(digital_sales)),
         "transactions": [
             {
                 "timestamp": row["timestamp"],

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 SHOPS = [
     {
         "slug": "workstation_specialty_coffee_pos",
