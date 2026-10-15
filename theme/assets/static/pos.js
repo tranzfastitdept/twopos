@@ -112,9 +112,10 @@
       const card = document.createElement("button");
       card.type = "button";
       card.className = "product-card";
-      card.innerHTML = `<span class="product-image"><img alt=""></span><span class="product-details"><strong></strong><span class="product-description"></span><span class="product-price"></span></span><span class="add-mark" aria-hidden="true">+</span>`;
+      card.innerHTML = `<span class="product-image"><img alt=""></span><span class="product-details"><strong></strong><span class="product-description"></span><span class="product-price"></span></span>`;
       card.querySelector("img").src = `/assets/${slug}/${product.image}`;
       card.querySelector("img").alt = product.name;
+      card.setAttribute("aria-label", `Add ${product.name} to the basket`);
       card.querySelector(".product-details strong").textContent = product.name;
       card.querySelector(".product-description").textContent = product.description;
       card.querySelector(".product-price").textContent = formatMoney(asCents(product.price));

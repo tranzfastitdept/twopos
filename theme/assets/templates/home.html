@@ -70,7 +70,6 @@
     .product-details > strong { padding-right: 17px; font-size: 13px; }
     .product-description { min-height: 35px; color: var(--muted); font-size: 10px; line-height: 1.5; }
     .product-price { color: var(--accent); font-size: 13px; font-weight: 700; }
-    .add-mark { position: absolute; right: 13px; bottom: 14px; display: grid; width: 23px; height: 23px; place-items: center; border-radius: 50%; background: var(--accent-pale); color: var(--accent-dark); font-size: 17px; }
 
     .checkout { position: sticky; top: 20px; display: flex; min-height: 560px; max-height: calc(100vh - 100px); flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
     .checkout-heading { display: flex; align-items: flex-start; justify-content: space-between; padding: 23px 23px 20px; border-bottom: 1px solid var(--line); }
@@ -329,9 +328,10 @@
           const card = document.createElement("button");
           card.type = "button";
           card.className = "product-card";
-          card.innerHTML = `<span class="product-image"><img alt=""></span><span class="product-details"><strong></strong><span class="product-description"></span><span class="product-price"></span></span><span class="add-mark" aria-hidden="true">+</span>`;
+          card.innerHTML = `<span class="product-image"><img alt=""></span><span class="product-details"><strong></strong><span class="product-description"></span><span class="product-price"></span></span>`;
           card.querySelector("img").src = `/assets/${slug}/${product.image}`;
           card.querySelector("img").alt = product.name;
+          card.setAttribute("aria-label", `Add ${product.name} to the basket`);
           card.querySelector(".product-details strong").textContent = product.name;
           card.querySelector(".product-description").textContent = product.description;
           card.querySelector(".product-price").textContent = formatMoney(asCents(product.price));

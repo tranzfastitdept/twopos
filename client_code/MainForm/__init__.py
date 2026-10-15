@@ -3,7 +3,7 @@ from ._anvil_designer import MainFormTemplate
 
 import anvil
 import anvil.js
-from anvil import Button, ColumnPanel, FlowPanel, GridPanel, Image, Label, RadioButton, TextBox
+from anvil import Button, ColumnPanel, FlowPanel, GridPanel, Image, Label, TextBox
 import math
 
 
@@ -29,14 +29,16 @@ class MainForm(MainFormTemplate):
   def show_shop_picker(self):
     self.current_shop = None
     self.reset_form()
-    self.root.add_component(Label(text="TWO STORES · TWO REGISTERS", role="pos-eyebrow"))
-    self.root.add_component(Label(text="Choose your counter.", role="pos-title"))
-    self.root.add_component(Label(
+    picker = ColumnPanel(role="shop-picker-content")
+    self.root.add_component(picker)
+    picker.add_component(Label(text="TWO STORES · TWO REGISTERS", role="pos-eyebrow"))
+    picker.add_component(Label(text="Choose your counter.", role="pos-title"))
+    picker.add_component(Label(
       text="Each register has its own menu, checkout, and sales history.",
       role="pos-subtitle",
     ))
     choices = FlowPanel(role="shop-choices")
-    self.root.add_component(choices)
+    picker.add_component(choices)
     for shop in self.shop_list:
       card = ColumnPanel(role="shop-card")
       logo = Image(source=shop["logo"], height=76, display_mode="shrink_to_fit")
@@ -105,11 +107,17 @@ class MainForm(MainFormTemplate):
       width_md=8,
       col_sm=0,
       width_sm=12,
+      col_xs=0,
+      width_xs=12,
     )
     section_heading = FlowPanel(role="section-heading")
     heading_copy = FlowPanel(role="section-heading-copy")
     heading_copy.add_component(Label(text="YOUR MENU", role="pos-eyebrow"))
     heading_copy.add_component(Label(text="Good things,\nmade to order.", role="section-title"))
+    heading_copy.add_component(Label(
+      text="Tap a product card to add it to your basket.",
+      role="menu-hint",
+    ))
     section_heading.add_component(heading_copy)
     section_heading.add_component(Label(text="{} ITEMS".format(len(self.products)), role="menu-count"))
     menu.add_component(section_heading)
@@ -119,28 +127,33 @@ class MainForm(MainFormTemplate):
       card = ColumnPanel(role="product-card")
       card.add_component(Image(
         source=product["image"],
-        height=185,
+        height=140,
         display_mode="fill_width",
         role="product-image",
       ))
       card.add_component(Label(text=product["name"], role="product-name"))
       card.add_component(Label(text=product["description"], role="product-description"))
       card.add_component(Label(text=self.format_money(product["price"]), role="product-price"))
-      add_button = Button(text="+", role="add-product-button")
-      add_button.set_event_handler(
+      card_action = Button(
+        text="Add {} to basket".format(product["name"]),
+        role="product-card-action",
+      )
+      card_action.set_event_handler(
         "click",
         lambda product_id=product["product_id"], **event_args: self.change_quantity(product_id, 1),
       )
-      card.add_component(add_button)
+      card.add_component(card_action)
       grid.add_component(
         card,
         row=str(index // 3),
         col_lg=(index % 3) * 4,
         width_lg=4,
-        col_md=(index % 2) * 6,
-        width_md=6,
-        col_sm=0,
-        width_sm=12,
+        col_md=(index % 3) * 4,
+        width_md=4,
+        col_sm=(index % 3) * 4,
+        width_sm=4,
+        col_xs=0,
+        width_xs=12,
       )
 
     self.basket_panel = ColumnPanel(role="basket-panel")
@@ -153,6 +166,8 @@ class MainForm(MainFormTemplate):
       width_md=4,
       col_sm=0,
       width_sm=12,
+      col_xs=0,
+      width_xs=12,
     )
     self.render_basket()
 
@@ -162,7 +177,7 @@ class MainForm(MainFormTemplate):
       self.cart.pop(product_id, None)
     elif quantity <= 99:
       self.cart[product_id] = quantity
-    self.render_register()
+    self.render_basket()
 
   def render_register(self):
     self.show_register()
@@ -244,20 +259,16 @@ class MainForm(MainFormTemplate):
 
     checkout_bottom.add_component(Label(text="Payment method", role="field-label"))
     payment_options = FlowPanel(role="payment-options")
-    cash = RadioButton(
+    cash = Button(
       text="Cash",
-      group_name="payment-method",
-      selected=self.payment_method == "Cash",
-      role="payment-option",
+      role="payment-option-selected" if self.payment_method == "Cash" else "payment-option",
     )
-    cash.set_event_handler("change", lambda **event_args: self.set_payment_method("Cash"))
-    digital = RadioButton(
+    cash.set_event_handler("click", lambda **event_args: self.set_payment_method("Cash"))
+    digital = Button(
       text="Digital",
-      group_name="payment-method",
-      selected=self.payment_method == "Digital",
-      role="payment-option",
+      role="payment-option-selected" if self.payment_method == "Digital" else "payment-option",
     )
-    digital.set_event_handler("change", lambda **event_args: self.set_payment_method("Digital"))
+    digital.set_event_handler("click", lambda **event_args: self.set_payment_method("Digital"))
     payment_options.add_component(cash)
     payment_options.add_component(digital)
     checkout_bottom.add_component(payment_options)
