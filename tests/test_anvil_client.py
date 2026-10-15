@@ -2,6 +2,7 @@ import importlib
 import sys
 import types
 import unittest
+from datetime import datetime
 
 from test_anvil_server import server, tables_store
 
@@ -72,6 +73,12 @@ class AnvilClientTests(unittest.TestCase):
             table.rows.clear()
         self.form = MainForm()
 
+    def test_cash_amount_parser_rejects_invalid_values(self):
+        self.assertEqual(self.form.parse_cash_amount("125.50"), 125.5)
+        self.assertEqual(self.form.parse_cash_amount(""), 0)
+        self.assertEqual(self.form.parse_cash_amount("1.2.3"), 0)
+        self.assertEqual(self.form.parse_cash_amount("-10"), 0)
+
     def test_shop_picker_selects_each_shop_and_add_buttons_keep_their_product(self):
         choices = find_component(self.form.root, "shop-choices")
         first_card, second_card = choices.children
@@ -105,6 +112,19 @@ class AnvilClientTests(unittest.TestCase):
         self.form.checkout_button.trigger("click")
         self.assertEqual(len(tables_store.transactions.rows), 1)
         self.assertFalse(self.form.cart)
+
+    def test_receipt_print_uses_dynamic_javascript_property_lookup(self):
+        print_calls = []
+        anvil.alert = lambda *args, **kwargs: True
+        anvil.js.window.print = lambda: print_calls.append(True)
+        self.form.open_shop("workstation_specialty_coffee_pos")
+        self.form.show_receipt({
+            "timestamp": datetime.now(),
+            "items": [],
+            "total_amount": 0,
+            "payment_method": "Digital",
+        })
+        self.assertEqual(print_calls, [True])
 
 
 if __name__ == "__main__":

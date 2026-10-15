@@ -126,6 +126,16 @@ class MainForm(MainFormTemplate):
         prices = {product["product_id"]: product["price"] for product in self.products}
         return round(sum(prices[item_id] * quantity for item_id, quantity in self.cart.items()), 2)
 
+    @staticmethod
+    def parse_cash_amount(value):
+        text = str(value or "").strip()
+        if not text or text == "." or text.count(".") > 1:
+            return 0
+        if not all(character in "0123456789." for character in text):
+            return 0
+        amount = float(text)
+        return amount if math.isfinite(amount) else 0
+
     def render_basket(self):
         self.basket_panel.clear()
         heading = FlowPanel(role="basket-heading")
@@ -185,12 +195,7 @@ class MainForm(MainFormTemplate):
             )
             self.cash_input.set_event_handler("change", self.cash_input_changed)
             self.basket_panel.add_component(self.cash_input)
-            try:
-                paid = round(float(self.cash_received or 0), 2)
-            except ValueError:
-                paid = 0
-            if not math.isfinite(paid) or paid < 0:
-                paid = 0
+            paid = round(self.parse_cash_amount(self.cash_received), 2)
             if paid < total:
                 change_text = f"Short by {self.format_money(total - paid)}." if paid else "Enter the amount received."
             else:
@@ -222,12 +227,7 @@ class MainForm(MainFormTemplate):
         total = self.basket_total()
         self.basket_total_label.text = f"Subtotal   {self.format_money(total)}"
         self.checkout_button.text = f"Charge {self.format_money(total)}"
-        try:
-            paid = round(float(self.cash_received or 0), 2)
-        except ValueError:
-            paid = 0
-        if not math.isfinite(paid) or paid < 0:
-            paid = 0
+        paid = round(self.parse_cash_amount(self.cash_received), 2)
         if self.change_label is not None:
             if paid <= 0:
                 self.change_label.text = "Enter the amount received."
@@ -329,7 +329,7 @@ class MainForm(MainFormTemplate):
             large=True,
         )
         if result:
-            anvil.js.window.print()
+            getattr(anvil.js.window, "print")()
 
     @staticmethod
     def format_money(value):
