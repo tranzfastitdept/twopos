@@ -1,3 +1,4 @@
+allow_embedding: false
 db_schema:
   app_settings:
     client: none
@@ -83,6 +84,7 @@ db_schema:
     title: Transactions
 name: TwoPOS
 native_deps: null
+package_name: twopos
 runtime_options:
   client_version: '2'
   server_spec: {}

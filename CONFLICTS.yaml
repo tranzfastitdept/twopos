@@ -1,0 +1,313 @@
+conflicting_items:
+- app_path: [CODE, extra_files/__init__.py]
+  item: [extra_files, __init__.py]
+  text_chunks:
+  - alternatives:
+    - {l: 0, n: 7, s: A}
+    - {l: 7, n: 1, s: B}
+    start: 0
+- app_path:
+  - SETTINGS
+  - []
+  edits:
+  - a_value:
+      app_settings:
+        client: none
+        columns:
+        - admin_ui: {}
+          name: key
+          type: string
+        - admin_ui: {}
+          name: value
+          type: string
+        server: full
+        title: App settings
+      products:
+        client: none
+        columns:
+        - admin_ui: {}
+          name: shop
+          target: shops
+          type: link_single
+        - admin_ui: {}
+          name: product_id
+          type: string
+        - admin_ui: {}
+          name: name
+          type: string
+        - admin_ui: {}
+          name: description
+          type: string
+        - admin_ui: {}
+          name: price
+          type: number
+        - admin_ui: {}
+          name: image
+          type: string
+        - admin_ui: {}
+          name: sort_order
+          type: number
+        server: full
+        title: Products
+      shops:
+        client: none
+        columns:
+        - admin_ui: {}
+          name: slug
+          type: string
+        - admin_ui: {}
+          name: name
+          type: string
+        - admin_ui: {}
+          name: logo
+          type: string
+        - admin_ui: {}
+          name: receipt_header
+          type: string
+        server: full
+        title: Shops
+      transactions:
+        client: none
+        columns:
+        - admin_ui: {}
+          name: shop
+          target: shops
+          type: link_single
+        - admin_ui: {}
+          name: timestamp
+          type: datetime
+        - admin_ui: {}
+          name: items_json
+          type: simpleObject
+        - admin_ui: {}
+          name: total_amount
+          type: number
+        - admin_ui: {}
+          name: payment_method
+          type: string
+        - admin_ui: {}
+          name: amount_paid
+          type: number
+        - admin_ui: {}
+          name: change_given
+          type: number
+        server: full
+        title: Transactions
+    b_value:
+    - access: {client: none, python_name: shops, server: full, table_id: 1}
+      columns:
+        shops_logo: {name: logo, type: string}
+        shops_name: {name: name, type: string}
+        shops_receipt_header: {name: receipt_header, type: string}
+        shops_slug: {name: slug, type: string}
+      id: 1
+      name: shops
+      python_name: shops
+    - access: {client: none, python_name: products, server: full, table_id: 2}
+      columns:
+        products_description: {name: description, type: string}
+        products_image: {name: image, type: string}
+        products_name: {name: name, type: string}
+        products_price: {name: price, type: number}
+        products_product_id: {name: product_id, type: string}
+        products_shop: {backend: anvil.tables.Row, name: shop, table_id: 1, type: liveObject}
+        products_sort_order: {name: sort_order, type: number}
+      id: 2
+      name: products
+      python_name: products
+    - access: {client: none, python_name: transactions, server: full, table_id: 3}
+      columns:
+        transactions_amount_paid: {name: amount_paid, type: number}
+        transactions_change_given: {name: change_given, type: number}
+        transactions_items_json: {name: items_json, type: simpleObject}
+        transactions_payment_method: {name: payment_method, type: string}
+        transactions_shop: {backend: anvil.tables.Row, name: shop, table_id: 1, type: liveObject}
+        transactions_timestamp: {name: timestamp, type: datetime}
+        transactions_total_amount: {name: total_amount, type: number}
+      id: 3
+      name: transactions
+      python_name: transactions
+    - access: {client: none, python_name: app_settings, server: full, table_id: 4}
+      columns:
+        app_settings_key: {name: key, type: string}
+        app_settings_value: {name: value, type: string}
+      id: 4
+      name: app_settings
+      python_name: app_settings
+    o_value: null
+    path: [db_schema]
+    type: [add, add]
+  - a_value: TwoPOS
+    b_value: TwoPOS Registers
+    o_value: null
+    path: [name]
+    type: [add, add]
+  - a_value: null
+    b_value:
+      head_html: |
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            var viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport) {
+              viewport.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no");
+            }
+          });
+          document.addEventListener("contextmenu", function (event) { event.preventDefault(); });
+          document.addEventListener("dragstart", function (event) { event.preventDefault(); });
+          document.addEventListener("gesturestart", function (event) { event.preventDefault(); });
+          document.addEventListener("selectstart", function (event) {
+            if (!event.target.closest("input, textarea")) event.preventDefault();
+          });
+          document.addEventListener("touchmove", function (event) {
+            if (event.touches.length > 1) event.preventDefault();
+          }, { passive: false });
+          document.addEventListener("wheel", function (event) {
+            if (event.ctrlKey || event.metaKey) event.preventDefault();
+          }, { passive: false });
+          document.addEventListener("keydown", function (event) {
+            if ((event.ctrlKey || event.metaKey) && ["+", "-", "=", "_", "0"].includes(event.key)) {
+              event.preventDefault();
+            }
+          });
+        </script>
+    o_value: null
+    path: [native_deps]
+    type: [add, add]
+  - a_value:
+      client_version: '2'
+      server_spec: {}
+      server_version: python3-sandbox
+      version: 2
+    b_value: {client_version: '3', server_version: python3-full, version: 3}
+    o_value: null
+    path: [runtime_options]
+    type: [add, add]
+  - a_value:
+    - client_config: {enable_v2: true}
+      server_config: {}
+      source: /runtime/services/tables.yml
+    b_value:
+    - client_config: {}
+      server_config: {auto_create_missing_columns: false}
+      source: /runtime/services/tables.yml
+    o_value: null
+    path: [services]
+    type: [add, add]
+  item:
+  - config
+  - - []
+- app_path: [CODE, forms/MainForm]
+  components:
+  - component: ''
+    conflicts:
+    - a_change:
+        component: ''
+        parent_type: null
+        to:
+          data_bindings: {}
+          properties: {role: pos-form}
+          type: ColumnPanel
+        type: add
+      type: [add, remove]
+  - component: $component_2
+    conflicts:
+    - a_change:
+        component: $component_2
+        parent_type: ColumnPanel
+        to:
+          data_bindings: {}
+          idx: 1
+          layout_properties: {full_width_row: true}
+          parent: ''
+          properties:
+            html: |-
+              <div class="pos-viewport">
+                <anvil-dropzone name="default"></anvil-dropzone>
+              </div>
+          type: HtmlComponent
+        type: add
+      type: [add, remove-parent]
+  - component: $component_1
+    conflicts:
+    - a_change:
+        component: $component_1
+        parent_type: ColumnPanel
+        to:
+          data_bindings: {}
+          idx: 0
+          parent: ''
+          properties:
+            html: |-
+              <style>
+              html,
+              body {
+                margin: 0 !important;
+                padding: 0 !important;
+              }
+
+              anvil-form[role="pos-form"],
+              anvil-form[role="pos-form"] .pos-viewport {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+              }
+
+              .pos-viewport {
+                height: auto !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+                position: relative !important;
+                top: 0 !important;
+                transform: none !important;
+              }
+
+              .pos-viewport > anvil-dropzone,
+              anvil-dropzone[name="default"] {
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                min-height: 0 !important;
+              }
+
+              .pos-viewport .hero,
+              .pos-viewport .hero-content,
+              .pos-viewport main,
+              .pos-viewport section:first-child {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+              }
+              </style>
+          type: HtmlComponent
+        type: add
+      type: [add, remove-parent]
+  item: [client_code, MainForm]
+  text_chunks:
+  - alternatives:
+    - {l: 5, n: 433, s: A}
+    - {l: 438, n: 355, s: B}
+    start: 5
+- app_path: [CODE, server_modules/ServerModule1]
+  item: [server_code, ServerModule1]
+  text_chunks:
+  - alternatives:
+    - {l: 9, n: 194, s: A}
+    - {l: 203, n: 199, s: B}
+    start: 9
+- app_path: [CODE, server_modules/catalog]
+  item: [server_code, catalog]
+  text_chunks:
+  - alternatives:
+    - {l: 0, n: 116, s: A}
+    - {l: 116, n: 117, s: B}
+    start: 0
+- app_path: [CODE, assets/theme.css]
+  item: [asset, theme.css]
+  text_chunks:
+  - alternatives:
+    - {l: 0, n: 1211, s: A}
+    - {l: 1211, n: 72, s: B}
+    start: 0
+merge:
+  base: c6044bdb1bfea25ce1a1b06999e61ffca3197258
+  parents: [d09649043fabc2c52996bd047bc862bbd730af50, 7654b7bb729ec755cd7de77e12c744f8319c149e]
