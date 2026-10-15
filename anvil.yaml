@@ -1,0 +1,80 @@
+allow_embedding: false
+package_name: twopos
+name: TwoPOS Registers
+runtime_options:
+  version: 3
+  client_version: '3'
+  server_version: python3-full
+startup: {type: form, module: MainForm}
+native_deps:
+  head_html: |
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+          viewport.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no");
+        }
+      });
+      document.addEventListener("contextmenu", function (event) { event.preventDefault(); });
+      document.addEventListener("dragstart", function (event) { event.preventDefault(); });
+      document.addEventListener("gesturestart", function (event) { event.preventDefault(); });
+      document.addEventListener("selectstart", function (event) {
+        if (!event.target.closest("input, textarea")) event.preventDefault();
+      });
+      document.addEventListener("touchmove", function (event) {
+        if (event.touches.length > 1) event.preventDefault();
+      }, { passive: false });
+      document.addEventListener("wheel", function (event) {
+        if (event.ctrlKey || event.metaKey) event.preventDefault();
+      }, { passive: false });
+      document.addEventListener("keydown", function (event) {
+        if ((event.ctrlKey || event.metaKey) && ["+", "-", "=", "_", "0"].includes(event.key)) {
+          event.preventDefault();
+        }
+      });
+    </script>
+services:
+- source: /runtime/services/tables.yml
+  client_config: {}
+  server_config: {auto_create_missing_columns: false}
+db_schema:
+- name: shops
+  id: 1
+  python_name: shops
+  columns:
+    shops_slug: {name: slug, type: string}
+    shops_name: {name: name, type: string}
+    shops_logo: {name: logo, type: string}
+    shops_receipt_header: {name: receipt_header, type: string}
+  access: {python_name: shops, server: full, client: none, table_id: 1}
+- name: products
+  id: 2
+  python_name: products
+  columns:
+    products_shop: {name: shop, type: liveObject, backend: anvil.tables.Row, table_id: 1}
+    products_product_id: {name: product_id, type: string}
+    products_name: {name: name, type: string}
+    products_description: {name: description, type: string}
+    products_price: {name: price, type: number}
+    products_image: {name: image, type: string}
+    products_sort_order: {name: sort_order, type: number}
+  access: {python_name: products, server: full, client: none, table_id: 2}
+- name: transactions
+  id: 3
+  python_name: transactions
+  columns:
+    transactions_shop: {name: shop, type: liveObject, backend: anvil.tables.Row, table_id: 1}
+    transactions_timestamp: {name: timestamp, type: datetime}
+    transactions_items_json: {name: items_json, type: simpleObject}
+    transactions_total_amount: {name: total_amount, type: number}
+    transactions_payment_method: {name: payment_method, type: string}
+    transactions_amount_paid: {name: amount_paid, type: number}
+    transactions_change_given: {name: change_given, type: number}
+  access: {python_name: transactions, server: full, client: none, table_id: 3}
+- name: app_settings
+  id: 4
+  python_name: app_settings
+  columns:
+    app_settings_key: {name: key, type: string}
+    app_settings_value: {name: value, type: string}
+  access: {python_name: app_settings, server: full, client: none, table_id: 4}

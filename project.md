@@ -1,22 +1,34 @@
-# TwoPOS: Separate Flask POS Registers
+# TwoPOS: Flask POS Registers and Anvil Deployment
 
 ## Project Overview
-A web-based point-of-sale system for two small shops. One Flask app serves separate coffee and cookie registers at distinct URLs. Each shop has its own CSV catalog and transaction history.
+A web-based point-of-sale system for two small shops. The same repository supports a local Flask version with per-shop CSV storage and a native Anvil version using Anvil Data Tables.
 
 ### Technical Stack
 - **Framework**: Flask
 - **Language**: Python 3, HTML, CSS, and JavaScript
-- **Data storage**: Per-shop CSV files; no SQL database
+- **Local Flask data storage**: Per-shop CSV files
+- **Anvil hosted data storage**: Anvil Data Tables, seeded automatically from the shop catalog in `server_code/catalog.py`
 - **Run locally**: `python -m pip install -r requirements.txt`, then `python app.py`
 - **Registers**: `http://127.0.0.1:5000/workstation_specialty_coffee_pos/` and `http://127.0.0.1:5000/keecoo_pos/`
 - **Dedicated registers**: Run `start.bat`; Keecoo is on port `51119` and coffee is on port `51120`. Each process is restricted to its own shop. Tunnels can target `http://127.0.0.1:51119` or `http://127.0.0.1:51120`.
 - **Chooser**: Running `python app.py` directly keeps the shop selector on port `5000`.
 
+## Anvil.works deployment
+
+The repository root is also a Git-cloneable Anvil app (`anvil.yaml`, `client_code`, `server_code`, and `theme`). In Anvil's Start Page, select **Clone from GitHub** and clone this repository's root. The app schema defines the `shops`, `products`, and `transactions` Data Tables. On its first launch, a server transaction seeds both menus. Each cloned Anvil app has its own database and sales history; Anvil deployments do not write the workstation's CSV transaction files.
+
+To create two dedicated Anvil registers, clone the same repository into **two Anvil apps**. On first launch each app creates a blank `default_shop` row in the `app_settings` Data Table. In each app's Data Tables editor, set that row's `value`:
+
+- Keecoo app: `keecoo_pos`
+- Coffee app: `workstation_specialty_coffee_pos`
+
+Each app then opens directly into its configured register and its server rejects calls for the other shop. Leave the value blank to keep the shop chooser. Publish each dedicated Anvil app separately to get a distinct hosted URL. The source is shared in Git while each app's Data Tables (including its register setting) are independent. For private GitHub repositories, check Anvil's current plan requirements for GitHub integration.
+
 ---
 
 ## Architecture & Data Models
 
-### 1. Per-shop CSV data
+### 1. Per-shop CSV data (Flask)
 
 Each shop's files live in its own `data` directory, so menus and transaction records stay separate.
 
@@ -80,3 +92,6 @@ Product images and logos remain in each shop's `assets` folder and are reference
 
 ### CSV storage note
 This local CSV-backed version is intended for a single app process and modest shop traffic. CSV files do not provide database transactions or cross-process write locking; back up each shop's `data` directory when preserving sales history matters.
+
+### Anvil database note
+The Anvil app is a separate hosted implementation of the same POS workflow. It stores products and sales in Anvil Data Tables, seeds the two menus on first load, and stores product thumbnails as app assets. Changes to the CSV menus should also be reflected in `server_code/catalog.py` before pushing an Anvil update.
