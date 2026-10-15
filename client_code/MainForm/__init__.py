@@ -126,6 +126,16 @@ class MainForm(MainFormTemplate):
     prices = {product["product_id"]: product["price"] for product in self.products}
     return round(sum(prices[item_id] * quantity for item_id, quantity in self.cart.items()), 2)
 
+  @staticmethod
+  def parse_cash_amount(value):
+    text = str(value or "").strip()
+    if not text or text == "." or text.count(".") > 1:
+      return 0
+    if not all(character in "0123456789." for character in text):
+      return 0
+    amount = float(text)
+    return amount if math.isfinite(amount) else 0
+
   def render_basket(self):
     self.basket_panel.clear()
     heading = FlowPanel(role="basket-heading")
@@ -185,152 +195,142 @@ class MainForm(MainFormTemplate):
       )
       self.cash_input.set_event_handler("change", self.cash_input_changed)
       self.basket_panel.add_component(self.cash_input)
-            try:
-                paid = round(float(self.cash_received or 0), 2)
-            except ValueError:
-                paid = 0
-            if not math.isfinite(paid) or paid < 0:
-                paid = 0
-            if paid < total:
-                change_text = f"Short by {self.format_money(total - paid)}." if paid else "Enter the amount received."
-            else:
-                change_text = f"Change due: {self.format_money(paid - total)}"
-            self.change_label = Label(text=change_text, role="change-message")
-            self.basket_panel.add_component(self.change_label)
-        else:
-            self.change_label = None
+      paid = round(self.parse_cash_amount(self.cash_received), 2)
+      if paid < total:
+        change_text = f"Short by {self.format_money(total - paid)}." if paid else "Enter the amount received."
+      else:
+        change_text = f"Change due: {self.format_money(paid - total)}"
+      self.change_label = Label(text=change_text, role="change-message")
+      self.basket_panel.add_component(self.change_label)
+    else:
+      self.change_label = None
 
-        self.checkout_button = Button(text=f"Charge {self.format_money(total)}", role="pos-button")
-        self.checkout_button.enabled = bool(self.cart) and (self.payment_method == "Digital" or paid >= total)
-        self.checkout_button.set_event_handler("click", self.checkout)
-        self.basket_panel.add_component(self.checkout_button)
+    self.checkout_button = Button(text=f"Charge {self.format_money(total)}", role="pos-button")
+    self.checkout_button.enabled = bool(self.cart) and (self.payment_method == "Digital" or paid >= total)
+    self.checkout_button.set_event_handler("click", self.checkout)
+    self.basket_panel.add_component(self.checkout_button)
 
-    def clear_basket(self):
-        self.cart = {}
-        self.cash_received = ""
-        self.render_register()
+  def clear_basket(self):
+    self.cart = {}
+    self.cash_received = ""
+    self.render_register()
 
-    def set_payment_method(self, method):
-        self.payment_method = method
-        self.render_register()
+  def set_payment_method(self, method):
+    self.payment_method = method
+    self.render_register()
 
-    def cash_input_changed(self, **event_args):
-        self.cash_received = self.cash_input.text or ""
-        self.update_checkout_state()
+  def cash_input_changed(self, **event_args):
+    self.cash_received = self.cash_input.text or ""
+    self.update_checkout_state()
 
-    def update_checkout_state(self):
-        total = self.basket_total()
-        self.basket_total_label.text = f"Subtotal   {self.format_money(total)}"
-        self.checkout_button.text = f"Charge {self.format_money(total)}"
-        try:
-            paid = round(float(self.cash_received or 0), 2)
-        except ValueError:
-            paid = 0
-        if not math.isfinite(paid) or paid < 0:
-            paid = 0
-        if self.change_label is not None:
-            if paid <= 0:
-                self.change_label.text = "Enter the amount received."
-            elif paid < total:
-                self.change_label.text = f"Short by {self.format_money(total - paid)}."
-            else:
-                self.change_label.text = f"Change due: {self.format_money(paid - total)}"
-        self.checkout_button.enabled = bool(self.cart) and (
-            self.payment_method == "Digital" or paid >= total
-        )
+  def update_checkout_state(self):
+    total = self.basket_total()
+    self.basket_total_label.text = f"Subtotal   {self.format_money(total)}"
+    self.checkout_button.text = f"Charge {self.format_money(total)}"
+    paid = round(self.parse_cash_amount(self.cash_received), 2)
+    if self.change_label is not None:
+      if paid <= 0:
+        self.change_label.text = "Enter the amount received."
+      elif paid < total:
+        self.change_label.text = f"Short by {self.format_money(total - paid)}."
+      else:
+        self.change_label.text = f"Change due: {self.format_money(paid - total)}"
+    self.checkout_button.enabled = bool(self.cart) and (
+      self.payment_method == "Digital" or paid >= total
+    )
 
-    def checkout(self, **event_args):
-        order = anvil.server.call(
-            "submit_transaction",
-            self.current_shop["slug"],
-            [{"product_id": key, "quantity": value} for key, value in self.cart.items()],
-            self.payment_method,
-            self.cash_received,
-        )
-        self.cart = {}
-        self.cash_received = ""
-        self.render_register()
-        self.show_receipt(order)
+  def checkout(self, **event_args):
+    order = anvil.server.call(
+      "submit_transaction",
+      self.current_shop["slug"],
+      [{"product_id": key, "quantity": value} for key, value in self.cart.items()],
+      self.payment_method,
+      self.cash_received,
+    )
+    self.cart = {}
+    self.cash_received = ""
+    self.render_register()
+    self.show_receipt(order)
 
-    def show_analytics(self):
-        self.analytics_visible = True
-        self.show_register()
+  def show_analytics(self):
+    self.analytics_visible = True
+    self.show_register()
 
-    def show_register_view(self):
-        self.analytics_visible = False
-        self.show_register()
+  def show_register_view(self):
+    self.analytics_visible = False
+    self.show_register()
 
-    def render_analytics(self):
-        data = anvil.server.call("get_shop_analytics", self.current_shop["slug"])
-        summary = FlowPanel(role="analytics-summary")
-        self.root.add_component(summary)
-        for title, value in (
-            ("Gross sales", data["gross_sales"]),
-            ("Orders", str(data["order_count"])),
-            ("Cash sales", data["cash_sales"]),
-            ("Digital sales", data["digital_sales"]),
-        ):
-            card = ColumnPanel(role="metric-card")
-            card.add_component(Label(text=title, role="field-label"))
-            card.add_component(Label(text=value, role="metric-value"))
-            summary.add_component(card)
-        self.root.add_component(Label(text="Recent transactions", role="basket-title"))
-        for order in data["transactions"]:
-            names = ", ".join(f"{item['quantity']} × {item['name']}" for item in order["items"])
-            row = FlowPanel(role="history-row")
-            details = Label(
-                text=f"{names} · {order['timestamp'].strftime('%Y-%m-%d %H:%M')} · {order['payment_method']}",
-                role="history-detail",
-            )
-            row.add_component(details)
-            row.add_component(Label(text=self.format_money(order["total_amount"]), role="basket-line-total"))
-            receipt_button = Button(text="Receipt", role="pos-quiet-button")
-            receipt_button.set_event_handler(
-                "click",
-                lambda receipt=order, **event_args: self.show_receipt(receipt),
-            )
-            row.add_component(receipt_button)
-            self.root.add_component(row)
-        if not data["transactions"]:
-            self.root.add_component(Label(text="No completed orders yet.", role="basket-empty"))
+  def render_analytics(self):
+    data = anvil.server.call("get_shop_analytics", self.current_shop["slug"])
+    summary = FlowPanel(role="analytics-summary")
+    self.root.add_component(summary)
+    for title, value in (
+      ("Gross sales", data["gross_sales"]),
+      ("Orders", str(data["order_count"])),
+      ("Cash sales", data["cash_sales"]),
+      ("Digital sales", data["digital_sales"]),
+    ):
+      card = ColumnPanel(role="metric-card")
+      card.add_component(Label(text=title, role="field-label"))
+      card.add_component(Label(text=value, role="metric-value"))
+      summary.add_component(card)
+    self.root.add_component(Label(text="Recent transactions", role="basket-title"))
+    for order in data["transactions"]:
+      names = ", ".join(f"{item['quantity']} × {item['name']}" for item in order["items"])
+      row = FlowPanel(role="history-row")
+      details = Label(
+        text=f"{names} · {order['timestamp'].strftime('%Y-%m-%d %H:%M')} · {order['payment_method']}",
+        role="history-detail",
+      )
+      row.add_component(details)
+      row.add_component(Label(text=self.format_money(order["total_amount"]), role="basket-line-total"))
+      receipt_button = Button(text="Receipt", role="pos-quiet-button")
+      receipt_button.set_event_handler(
+        "click",
+        lambda receipt=order, **event_args: self.show_receipt(receipt),
+      )
+      row.add_component(receipt_button)
+      self.root.add_component(row)
+    if not data["transactions"]:
+      self.root.add_component(Label(text="No completed orders yet.", role="basket-empty"))
 
-    def show_receipt(self, order):
-        receipt = ColumnPanel(role="receipt")
-        receipt.add_component(Label(text="CUSTOMER RECEIPT", role="pos-eyebrow"))
-        receipt.add_component(Label(text=self.current_shop["name"], role="receipt-title"))
-        receipt.add_component(Label(
-            text=order["timestamp"].strftime("%Y-%m-%d %H:%M"),
-            role="history-detail",
-        ))
-        for item in order["items"]:
-            receipt.add_component(Label(
-                text=f"{item['quantity']} × {item['name']}   {self.format_money(item['line_total'])}",
-                role="receipt-line",
-            ))
-        receipt.add_component(Label(
-            text=f"TOTAL   {self.format_money(order['total_amount'])}",
-            role="receipt-total",
-        ))
-        receipt.add_component(Label(text=f"Payment: {order['payment_method']}", role="receipt-line"))
-        if order["payment_method"] == "Cash":
-            receipt.add_component(Label(
-                text=f"Paid: {self.format_money(order['amount_paid'])}",
-                role="receipt-line",
-            ))
-            receipt.add_component(Label(
-                text=f"Change: {self.format_money(order['change_given'])}",
-                role="receipt-line",
-            ))
-        receipt.add_component(Label(text=self.current_shop["receipt_header"], role="receipt-footer"))
-        result = anvil.alert(
-            receipt,
-            title="Customer receipt",
-            buttons=[("Close", False), ("Print", True)],
-            large=True,
-        )
-        if result:
-            anvil.js.window.print()
+  def show_receipt(self, order):
+    receipt = ColumnPanel(role="receipt")
+    receipt.add_component(Label(text="CUSTOMER RECEIPT", role="pos-eyebrow"))
+    receipt.add_component(Label(text=self.current_shop["name"], role="receipt-title"))
+    receipt.add_component(Label(
+      text=order["timestamp"].strftime("%Y-%m-%d %H:%M"),
+      role="history-detail",
+    ))
+    for item in order["items"]:
+      receipt.add_component(Label(
+        text=f"{item['quantity']} × {item['name']}   {self.format_money(item['line_total'])}",
+        role="receipt-line",
+      ))
+    receipt.add_component(Label(
+      text=f"TOTAL   {self.format_money(order['total_amount'])}",
+      role="receipt-total",
+    ))
+    receipt.add_component(Label(text=f"Payment: {order['payment_method']}", role="receipt-line"))
+    if order["payment_method"] == "Cash":
+      receipt.add_component(Label(
+        text=f"Paid: {self.format_money(order['amount_paid'])}",
+        role="receipt-line",
+      ))
+      receipt.add_component(Label(
+        text=f"Change: {self.format_money(order['change_given'])}",
+        role="receipt-line",
+      ))
+    receipt.add_component(Label(text=self.current_shop["receipt_header"], role="receipt-footer"))
+    result = anvil.alert(
+      receipt,
+      title="Customer receipt",
+      buttons=[("Close", False), ("Print", True)],
+      large=True,
+    )
+    if result:
+      anvil.js.window.print()
 
-    @staticmethod
-    def format_money(value):
-        return f"₱{float(value):,.2f}"
+  @staticmethod
+  def format_money(value):
+    return f"₱{float(value):,.2f}"
